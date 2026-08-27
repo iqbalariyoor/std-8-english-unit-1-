@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bonds of Life - STD 8 UNIT 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Anek+Malayalam:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#2E7D32;--secondary:#E65100;--accent:#FFC107;--blue:#1565C0;--purple:#6A1B9A;--teal:#00897B;--shadow:0 8px 20px rgba(0,0,0,.15);--radius:20px}
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none;margin:0;padding:0}
+body{background:linear-gradient(180deg,#E8F5E9 0%,#FFF8E1 40%,#fff 70%);min-height:100vh;overflow-x:hidden;color:#263238;font-family:'Quicksand','Segoe UI',sans-serif}
+h1,h2,h3{font-family:'Baloo 2',cursive}
+.ml{font-family:'Anek Malayalam',sans-serif;font-weight:600}
+#app{position:relative;z-index:1;max-width:1050px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:15px}
+header{background:rgba(255,255,255,.97);padding:12px 20px;border-radius:var(--radius);box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;flex-wrap:wrap;gap:10px}
+.logo-area{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-area h1{font-size:1.25rem;color:var(--primary);font-weight:800}
+.logo-area .sub{font-size:.85rem;color:#0277BD}
+.logo-area span{font-size:.78rem;background:var(--accent);color:#333;padding:3px 10px;border-radius:12px;font-weight:bold}
+.stats-bar{display:flex;align-items:center;gap:15px;background:#FFF9C4;padding:8px 16px;border-radius:30px;border:2px solid #FBC02D;font-weight:bold;font-size:1.05rem}
+.stat-item{display:flex;align-items:center;gap:5px}
+.controls{display:flex;gap:8px}
+.icon-btn{background:#fff;border:2px solid #E0E0E0;width:40px;height:40px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:1.1rem;cursor:pointer;box-shadow:0 3px 6px rgba(0,0,0,.1)}
+.icon-btn:hover{transform:scale(1.1)}
+.progress-container{width:100%;background:rgba(255,255,255,.6);height:10px;border-radius:10px;overflow:hidden;margin-bottom:15px;box-shadow:inset 0 2px 4px rgba(0,0,0,.1)}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#4CAF50,#8BC34A);transition:width .4s ease}
+.screen{display:none;flex-direction:column;align-items:center;width:100%;flex:1;animation:fadeIn .3s ease-in-out}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.home-card{background:rgba(255,255,255,.95);border-radius:25px;padding:30px 20px;text-align:center;box-shadow:var(--shadow);width:100%;max-width:720px;margin:auto;border:4px solid #fff}
+.main-title{color:#2E7D32;font-size:1.9rem;margin-bottom:6px}
+.sub-title{color:#D84315;font-size:1.2rem;margin-bottom:8px;font-weight:700}
+.author-tag{background:#E1F5FE;color:#0277BD;display:inline-block;padding:4px 16px;border-radius:20px;font-size:.9rem;margin-bottom:22px;font-weight:bold}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;width:100%}
+.btn-menu{padding:16px 18px;border:none;border-radius:20px;font-size:1.02rem;font-weight:bold;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 0 rgba(0,0,0,.2);text-shadow:1px 1px 2px rgba(0,0,0,.3);transition:all .2s;font-family:'Baloo 2',cursive}
+.btn-menu:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.b1{background:linear-gradient(135deg,#4CAF50,#43A047)}.b2{background:linear-gradient(135deg,#FF7043,#F4511E)}
+.b3{background:linear-gradient(135deg,#2196F3,#1E88E5)}.b4{background:linear-gradient(135deg,#9C27B0,#8E24AA)}
+.b5{background:linear-gradient(135deg,#009688,#00897B)}.b6{background:linear-gradient(135deg,#FF9800,#FB8C00)}
+.b7{background:linear-gradient(135deg,#795548,#6D4C41)}.b8{background:linear-gradient(135deg,#607D8B,#546E7A)}
+.b9{background:linear-gradient(135deg,#3F51B5,#3949AB)}.b10{background:linear-gradient(135deg,#EC407A,#D81B60)}
+.b11{background:linear-gradient(135deg,#8D6E63,#6D4C41)}.b12{background:linear-gradient(135deg,#26C6DA,#00ACC1)}
+.b13{background:linear-gradient(135deg,#7CB342,#558B2F)}.b14{background:linear-gradient(135deg,#FFB300,#FF8F00)}
+.b15{background:linear-gradient(135deg,#5C6BC0,#3949AB)}.b16{background:linear-gradient(135deg,#EF5350,#C62828)}
+.b17{background:linear-gradient(135deg,#AB47BC,#8E24AA)}.b18{background:linear-gradient(135deg,#26A69A,#00897B)}
+.lesson-pick{background:#fff;border:3px solid #A5D6A7;border-radius:18px;padding:18px 22px;margin-bottom:14px;cursor:pointer;display:flex;align-items:center;gap:14px;box-shadow:0 4px 12px rgba(0,0,0,.08);transition:all .2s;width:100%;max-width:520px}
+.lesson-pick:hover{border-color:#4CAF50;background:#E8F5E9;transform:translateY(-3px)}
+.lesson-pick .lp-emoji{font-size:2.4rem}
+.lesson-pick .lp-title{font-size:1.2rem;font-weight:800;color:#2E7D32;font-family:'Baloo 2',cursive}
+.lesson-pick .lp-sub{font-size:.9rem;color:#546E7A}
+.section-header{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;background:#fff;padding:12px 20px;border-radius:15px;box-shadow:var(--shadow);flex-wrap:wrap;gap:10px}
+.section-title{font-size:1.15rem;color:var(--primary);font-weight:800;display:flex;align-items:center;gap:8px;font-family:'Baloo 2',cursive}
+.back-btn{background:linear-gradient(135deg,#607D8B,#546E7A);color:#fff;border:none;padding:8px 20px;border-radius:20px;font-weight:bold;cursor:pointer}
+.content-box{background:rgba(255,255,255,.97);border-radius:22px;padding:24px;box-shadow:var(--shadow);width:100%;max-width:850px;margin:0 auto 20px;border:3px solid #fff}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px;width:100%;padding-bottom:20px}
+.word-card{background:#fff;border-radius:20px;padding:14px;text-align:center;box-shadow:var(--shadow);border:3px solid #fff;transition:all .3s;cursor:pointer;display:flex;flex-direction:column;align-items:center}
+.word-card:hover{transform:translateY(-6px);border-color:var(--accent)}
+.word-card.playing{animation:pulseCard .6s infinite alternate;border-color:var(--primary);background:#F1F8E9}
+@keyframes pulseCard{from{transform:scale(1)}to{transform:scale(1.05)}}
+.card-emoji{font-size:3.4rem;margin-bottom:8px}
+.word-eng{font-size:1.35rem;margin-bottom:6px;font-weight:800;color:#2E7D32;font-family:'Baloo 2',cursive}
+.word-meaning{font-size:.9rem;color:#555;margin-bottom:8px}
+.replay-btn{background:#E8EAF6;color:#3F51B5;border:none;padding:5px 12px;border-radius:15px;font-size:.85rem;font-weight:bold;cursor:pointer}
+.story-title-wrap{text-align:center;width:100%;margin-bottom:18px}
+.story-title{text-align:center;font-size:1.5rem;margin-bottom:16px;background:linear-gradient(90deg,#A5D6A7,#66BB6A);display:inline-block;padding:8px 30px;border-radius:30px;color:#1B5E20!important;font-family:'Baloo 2',cursive}
+.story-para{background:#E8F5E9;border-left:5px solid var(--primary);padding:14px 18px;border-radius:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.story-para p{font-size:1.15rem;line-height:1.9;flex:1;min-width:250px}
+.mini-play{background:var(--blue);color:#fff;border:none;width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1.1rem;flex-shrink:0}
+.read-all-btn{background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff;border:none;padding:12px 30px;border-radius:25px;font-size:1.05rem;font-weight:bold;cursor:pointer;margin-bottom:18px;box-shadow:0 4px 10px rgba(76,175,80,.4);font-family:'Baloo 2',cursive}
+.activity-block{background:#FFF8E1;border:2px solid #FFE082;border-radius:18px;padding:20px;margin-bottom:22px;width:100%}
+.activity-heading{color:#E65100;font-size:1.15rem;margin-bottom:14px;font-weight:800;font-family:'Baloo 2',cursive}
+.activity-sub{font-size:.95rem;color:#455A64;margin-bottom:10px}
+.diary-area{width:100%;min-height:90px;border:2px solid #B0BEC5;border-radius:12px;padding:10px;font-size:1rem;font-family:'Quicksand',sans-serif;margin-top:8px}
+.fillbox{border:2px solid #90A4AE;border-radius:10px;padding:6px 10px;font-size:1rem;font-family:'Quicksand',sans-serif;font-weight:700;color:#2E7D32;min-width:110px;text-align:center;background:#fff}
+select.fillbox{cursor:pointer}
+.check-btn{background:var(--primary);color:#fff;border:none;padding:8px 22px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px;font-family:'Baloo 2',cursive}
+.model-answer-box{background:#F3E5F5;border:2px solid #CE93D8;border-radius:14px;padding:14px 18px;margin-top:10px;font-size:1.05rem;line-height:1.9;display:none}
+.reveal-model-btn{background:var(--purple);color:#fff;border:none;padding:8px 20px;border-radius:18px;font-size:.9rem;cursor:pointer;margin-top:6px;font-family:'Baloo 2',cursive;font-weight:bold}
+.game-box{background:rgba(255,255,255,.95);border-radius:25px;padding:25px;box-shadow:var(--shadow);width:100%;max-width:750px;margin:0 auto;display:flex;flex-direction:column;align-items:center;border:4px solid #fff}
+.game-instruction{font-size:1.05rem;color:#37474F;margin-bottom:20px;text-align:center;background:#E0F2F1;padding:8px 20px;border-radius:20px;font-weight:bold;font-family:'Baloo 2',cursive}
+.g1-image-box{width:170px;height:170px;background:#F5F5F5;border-radius:20px;display:flex;justify-content:center;align-items:center;margin-bottom:22px;border:3px solid #E0E0E0;padding:10px;font-size:5rem}
+.options-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;max-width:480px}
+.meaning-box{font-size:1.3rem;font-weight:800;color:#2E7D32;background:#E8F5E9;padding:16px 30px;border-radius:20px;margin-bottom:22px;border:2px dashed #4CAF50;text-align:center}
+.listen-btn-big{background:linear-gradient(135deg,#3F51B5,#303F9F);color:#fff;border:none;width:96px;height:96px;border-radius:50%;font-size:2.6rem;cursor:pointer;margin-bottom:22px;box-shadow:0 6px 0 #1A237E}
+.listen-btn-big:active{transform:translateY(4px);box-shadow:0 2px 0 #1A237E}
+.option-btn{background:#fff;border:3px solid #81D4FA;padding:14px;border-radius:18px;font-size:1.2rem;font-weight:bold;color:#0277BD!important;cursor:pointer;box-shadow:0 4px 0 #4FC3F7;font-family:'Baloo 2',cursive}
+.option-btn:hover{background:#E1F5FE}
+.option-btn.correct{background:#C8E6C9!important;border-color:#4CAF50!important;color:#2E7D32!important;box-shadow:0 4px 0 #388E3C!important}
+.option-btn.wrong{background:#FFCDD2!important;border-color:#F44336!important;color:#C62828!important;box-shadow:0 4px 0 #D32F2F!important}
+.match-container{display:flex;justify-content:space-between;width:100%;gap:18px;margin-bottom:18px}
+.match-column{display:flex;flex-direction:column;gap:14px;flex:1}
+.match-item{background:#fff;border:3px solid #CFD8DC;border-radius:15px;padding:10px;display:flex;align-items:center;justify-content:center;min-height:78px;cursor:pointer}
+.match-item:hover{border-color:var(--blue);background:#E3F2FD}
+.match-item.selected{border-color:var(--accent);background:#FFF8E1}
+.match-item.matched{border-color:var(--primary);background:#E8F5E9;opacity:.6;pointer-events:none}
+.match-item.wrong{border-color:#F44336!important;background:#FFCDD2!important}
+.match-item .text-thumb{font-size:1.15rem;font-weight:bold;font-family:'Baloo 2',cursive;text-align:center}
+.missing-word-display{font-size:2rem;font-weight:bold;color:#2E7D32!important;background:#E3F2FD;padding:14px 36px;border-radius:20px;margin-bottom:22px;border:2px dashed #2196F3;font-family:'Baloo 2',cursive;letter-spacing:2px}
+.letters-options{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.letter-btn{background:#fff;border:3px solid #BA68C8;width:64px;height:64px;border-radius:50%;font-size:1.7rem;font-weight:bold;color:#6A1B9A!important;display:flex;justify-content:center;align-items:center;cursor:pointer;box-shadow:0 5px 0 #9C27B0;font-family:'Baloo 2',cursive}
+.target-pic{font-size:5rem;margin-bottom:14px;text-align:center}
+.drop-slots{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;justify-content:center}
+.letter-slot{width:52px;height:52px;border:3px dashed #B0BEC5;background:#ECEFF1;border-radius:14px;display:flex;justify-content:center;align-items:center;font-size:1.6rem;font-weight:bold;color:#2E7D32;font-family:'Baloo 2',cursive}
+.scrambled-letters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.tile-btn{width:50px;height:50px;background:#FFE082;border:2px solid #FFB300;border-radius:12px;font-size:1.5rem;font-weight:bold;color:#E65100!important;display:flex;justify-content:center;align-items:center;cursor:pointer;box-shadow:0 4px 0 #FFA000;font-family:'Baloo 2',cursive}
+.quiz-q{background:#fff;border-radius:16px;padding:16px 20px;margin-bottom:16px;box-shadow:0 3px 10px rgba(0,0,0,.08);border-left:5px solid var(--blue)}
+.quiz-q .qtext{font-size:1.1rem;margin-bottom:12px;font-weight:bold}
+.quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.quiz-opt{background:#F5F5F5;border:2px solid #E0E0E0;border-radius:12px;padding:10px;cursor:pointer;text-align:center;font-size:1rem}
+.quiz-opt.picked{border-color:var(--blue);background:#E3F2FD}
+.quiz-opt.correct-ans{border-color:#4CAF50;background:#C8E6C9}
+.quiz-opt.wrong-ans{border-color:#F44336;background:#FFCDD2}
+.submit-quiz-btn{background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff;border:none;padding:14px 40px;border-radius:25px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:10px;box-shadow:0 4px 10px rgba(76,175,80,.4);font-family:'Baloo 2',cursive}
+.quiz-score-box{background:#FFF9C4;border:2px solid #FBC02D;border-radius:18px;padding:18px;text-align:center;font-size:1.2rem;font-weight:bold;margin-bottom:18px}
+table.vocab-table{width:100%;border-collapse:collapse}
+.vocab-table th{background:var(--primary);color:#fff;padding:10px;font-size:.95rem;font-family:'Baloo 2',cursive}
+.vocab-table td{padding:10px;border-bottom:1px solid #eee;font-size:1.05rem;text-align:center}
+.vocab-table tr:nth-child(even){background:#FAFAFA}
+.vocab-emoji{font-size:1.6rem}
+.modal-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);z-index:100;display:none;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.active{display:flex}
+.reward-card{background:#fff;border-radius:30px;padding:30px;text-align:center;max-width:480px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.3);border:5px solid #FFD54F}
+.reward-icon{font-size:3.6rem;margin-bottom:10px}
+.reward-title{color:#2E7D32;font-size:1.9rem;margin-bottom:8px}
+.reward-subtitle{color:#E65100;font-size:1.1rem;margin-bottom:18px}
+.primary-action-btn{background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff;border:none;padding:12px 28px;border-radius:25px;font-size:1.05rem;font-weight:bold;cursor:pointer;font-family:'Baloo 2',cursive}
+.instructions-list{text-align:left;line-height:1.9;font-size:1rem;background:#F5F5F5;padding:20px;border-radius:15px;width:100%}
+.instructions-list li{margin-bottom:8px}
+.qa-line{background:#F1F8E9;border-radius:12px;padding:10px 16px;margin-bottom:10px}
+.qa-line .q{font-weight:bold;color:#2E7D32!important}
+.qa-line .a{display:none;color:#BF360C!important;margin-top:6px}
+.qa-line .a.show{display:block}
+.reveal-btn{background:var(--purple);color:#fff;border:none;padding:6px 16px;border-radius:14px;font-size:.85rem;cursor:pointer;margin-top:6px;font-family:'Baloo 2',cursive}
+.qp-section{background:#E8F5E9;border:2px solid #81C784;border-radius:16px;padding:18px;margin-bottom:18px}
+.qp-heading{color:#2E7D32;font-size:1.1rem;font-weight:800;margin-bottom:12px;border-bottom:2px dashed #81C784;padding-bottom:6px;font-family:'Baloo 2',cursive}
+.qp-q{background:#fff;border-radius:12px;padding:12px 16px;margin-bottom:12px;border-left:4px solid var(--teal);font-size:1.02rem;line-height:1.7}
+.qp-q .qnum{font-weight:bold;color:var(--teal)}
+.bio-card{background:#E8F5E9;border-radius:16px;padding:16px;margin-bottom:14px;border:2px solid #A5D6A7}
+.bio-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #C8E6C9;flex-wrap:wrap}
+.bio-label{font-weight:bold;color:#2E7D32;min-width:150px}
+.bio-photo{font-size:3.4rem;text-align:center;margin-bottom:10px}
+.seq-item{background:#fff;border:2px solid #CFD8DC;border-radius:12px;padding:10px 14px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.seq-item.selected{border-color:var(--accent);background:#FFF8E1}
+.seq-item.correct{border-color:#4CAF50;background:#E8F5E9}
+.seq-num{background:var(--blue);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold}
+.progress-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:12px;padding:10px 16px;margin-bottom:10px;border:2px solid #E0E0E0}
+.progress-row.done{border-color:#4CAF50;background:#E8F5E9}
+.script-line{background:#fff;border-radius:10px;padding:8px 14px;margin-bottom:8px;border-left:4px solid #7E57C2}
+.script-line b{color:#5E35B1}
+.choose-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:560px;margin:0 auto}
+.unit-qp-paper{background:#fff;border:2px solid #333;border-radius:8px;padding:28px 32px;font-family:'Times New Roman',Times,serif;color:#111;line-height:1.6}
+.unit-qp-paper .qp-school{text-align:center;font-size:1.05rem;font-weight:bold;margin-bottom:4px}
+.unit-qp-paper .qp-title{text-align:center;font-size:1.35rem;font-weight:bold;margin:8px 0 4px;text-decoration:underline}
+.unit-qp-paper .qp-meta{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:.95rem;margin:12px 0 18px;border-bottom:2px solid #333;padding-bottom:10px}
+.unit-qp-paper .qp-act{margin-bottom:22px}
+.unit-qp-paper .qp-act-h{font-weight:bold;font-size:1.05rem;margin-bottom:8px;border-left:4px solid #2E7D32;padding-left:10px}
+.unit-qp-paper .qp-act p,.unit-qp-paper .qp-act li{font-size:1rem;margin-bottom:6px}
+@media print{
+header,.progress-container,.section-header,.controls,.btn-menu,.home-card .menu-grid,.listen-btn-big,.reveal-model-btn,.reveal-btn,.check-btn,.submit-quiz-btn,.replay-btn,.mini-play,.read-all-btn,.no-print{display:none!important}
+body{background:#fff!important}
+.content-box{box-shadow:none;border:none;max-width:100%!important;padding:0!important}
+.model-answer-box{display:block!important}
+.unit-qp-paper{border:none;padding:0;box-shadow:none}
+#unitQPScreen.screen{display:flex!important}
+#unitQPScreen .section-header{display:none!important}
+}
+@media (max-width:600px){.main-title{font-size:1.4rem}.sub-title{font-size:1rem}.options-grid{grid-template-columns:1fr}.match-container{flex-direction:column}.quiz-opts{grid-template-columns:1fr}.story-para p{font-size:1rem}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+<div id="app">
+<header>
+<div class="logo-area" onclick="showScreen('homeScreen')">
+  <div style="font-size:1.8rem">🌿</div>
+  <div><h1>Bonds of Life</h1><span>STD 8 · UNIT 1</span><div class="sub ml">എട്ടാം ക്ലാസ് • യൂണിറ്റ് 1</div></div>
+</div>
+<div class="stats-bar"><div class="stat-item">⭐ <span id="valScore">0</span></div><div class="stat-item">❤️ <span id="valLives">5</span></div><div class="stat-item">🏆 <span id="valStars">0</span></div></div>
+<div class="controls">
+<button class="icon-btn" id="btnAudioToggle" onclick="toggleAudio()" title="Sound">🔊</button>
+<button class="icon-btn" onclick="printPage()" title="Print">🖨️</button>
+<button class="icon-btn" onclick="downloadPage()" title="Download">⬇️</button>
+<button class="icon-btn" onclick="toggleFullscreen()" title="Full Screen">⛶</button>
+<button class="icon-btn" onclick="showScreen('homeScreen')" title="Home">🏠</button>
+</div>
+</header>
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- HOME SCREEN -->
+<div id="homeScreen" class="screen active">
+<div class="home-card">
+<h1 class="main-title">🌿 Bonds of Life</h1>
+<h2 class="sub-title">UNIT 1 : BONDS OF LIFE (STD VIII)</h2>
+<div class="author-tag ml">Prepared for Kerala Class 8 English</div>
+<div class="menu-grid">
+<button class="btn-menu b1" onclick="openChoose('read')">📖 Read the Lessons</button>
+<button class="btn-menu b2" onclick="openChoose('learn')">🗂️ Learn Words</button>
+<button class="btn-menu b6" onclick="openChoose('activities')">📝 Activities</button>
+<button class="btn-menu b3" onclick="openChoose('games')">🎮 Games</button>
+<button class="btn-menu b4" onclick="openChoose('quiz')">❓ Quiz</button>
+<button class="btn-menu b10" onclick="showScreen('modelQPScreen')">📋 Model Question Paper</button>
+<button class="btn-menu b18" onclick="showScreen('unitQPScreen')">📄 Unit Question Paper</button>
+<button class="btn-menu b7" onclick="openChoose('vocab')">📚 Vocabulary</button>
+<button class="btn-menu b5" onclick="showScreen('bioScreen')">👤 About the Authors</button>
+<button class="btn-menu b11" onclick="openChoose('diary')">📔 Diary Entry</button>
+<button class="btn-menu b12" onclick="openChoose('letter')">✉️ Letter Box</button>
+<button class="btn-menu b13" onclick="openChoose('roleplay')">🎭 Role Play Zone</button>
+<button class="btn-menu b14" onclick="openChoose('grammar')">✏️ Grammar Quest</button>
+<button class="btn-menu b15" onclick="openChoose('punctuation')">❗ Punctuation &amp; Editing</button>
+<button class="btn-menu b16" onclick="openChoose('wordfun')">🔤 Idioms &amp; Phrasal Verbs</button>
+<button class="btn-menu b9" onclick="openChoose('poster')">🪧 Descriptive Writing</button>
+<button class="btn-menu b17" onclick="showScreen('doorwayScreen')">🦋 Log In: Pickles Comic</button>
+<button class="btn-menu b18" onclick="showScreen('progressScreen')">📊 My Progress</button>
+<button class="btn-menu b8" onclick="showScreen('instructionsScreen')">ℹ️ Instructions</button>
+</div>
+</div>
+</div>
+
+<!-- CHOOSE LESSON SCREEN -->
+<div id="chooseScreen" class="screen">
+<div class="section-header"><div class="section-title" id="chooseTitle">Choose a Lesson</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div>
+<div class="content-box"><div class="choose-wrap" id="chooseList"></div></div>
+</div>
+
+<!-- CONTENT SCREEN -->
+<div id="contentScreen" class="screen">
+<div class="section-header"><div class="section-title" id="contentTitle">Content</div><button class="back-btn" id="contentBackBtn" onclick="goBackFromContent()">Back</button></div>
+<div class="content-box" id="contentBody"></div>
+</div>
+
+<!-- GAMES MENU SCREEN -->
+<div id="gamesMenuScreen" class="screen">
+<div class="section-header"><div class="section-title" id="gamesMenuTitle">🎮 Games</div><button class="back-btn" onclick="openChoose('games')">Back</button></div>
+<div class="menu-grid" style="max-width:720px;margin:10px auto" id="gamesButtons"></div>
+</div>
+
+<!-- INDIVIDUAL GAME SCREENS -->
+<div id="game1Screen" class="screen"><div class="game-box"><div class="game-instruction">🎮 Guess the correct word!</div><div class="g1-image-box" id="g1ImgBox"></div><div class="options-grid" id="g1OptionsGrid"></div></div></div>
+<div id="game2Screen" class="screen"><div class="game-box"><div class="game-instruction">🔗 Match English word with Malayalam meaning!</div><div class="match-container"><div class="match-column" id="g2PicsCol"></div><div class="match-column" id="g2WordsCol"></div></div></div></div>
+<div id="game3Screen" class="screen"><div class="game-box"><div class="game-instruction">🔍 Find the missing letter!</div><div class="g1-image-box" id="g3ImgBox"></div><div class="missing-word-display" id="g3WordDisplay"></div><div class="letters-options" id="g3LettersGrid"></div></div></div>
+<div id="game4Screen" class="screen"><div class="game-box"><div class="game-instruction">🧩 Arrange the letters!</div><div class="target-pic" id="g4ImgBox"></div><div class="drop-slots" id="g4Slots"></div><div class="scrambled-letters" id="g4Tiles"></div></div></div>
+<div id="game5Screen" class="screen"><div class="game-box"><div class="game-instruction">🎧 Listen and choose!</div><button class="listen-btn-big" id="g5ReplayBtn">🔊</button><div class="options-grid" id="g5OptionsGrid"></div></div></div>
+<div id="game6Screen" class="screen"><div class="game-box"><div class="game-instruction">🌟 Pick the English word!</div><div class="meaning-box ml" id="g6MeaningBox"></div><div class="options-grid" id="g6OptionsGrid"></div></div></div>
+<div id="game7Screen" class="screen"><div class="game-box"><div class="game-instruction">📋 Arrange events in order!</div><div id="g7SeqList" style="width:100%"></div><button class="check-btn" onclick="checkSequence()">✅ Check Order</button><div class="result-msg" id="g7Result" style="margin-top:8px;font-weight:bold"></div></div></div>
+<div id="game8Screen" class="screen"><div class="game-box"><div class="game-instruction">🎭 Who said / did this?</div><div class="meaning-box" id="g8QuoteBox" style="font-size:1.15rem"></div><div class="options-grid" id="g8OptionsGrid"></div></div></div>
+<div id="game9Screen" class="screen"><div class="game-box"><div class="game-instruction">🔄 Synonym / Antonym</div><div class="meaning-box" id="g9PromptBox" style="font-size:1.2rem"></div><div class="options-grid" id="g9OptionsGrid"></div></div></div>
+<div id="game10Screen" class="screen"><div class="game-box"><div class="game-instruction">📝 Complete the sentence!</div><div class="meaning-box" id="g10SentBox" style="font-size:1.15rem"></div><div class="options-grid" id="g10OptionsGrid"></div></div></div>
+
+<!-- MODEL QUESTION PAPER -->
+<div id="modelQPScreen" class="screen"><div class="section-header"><div class="section-title">📋 Model Question Paper</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div><div class="content-box" id="modelQPContainer"></div></div>
+
+<!-- UNIT QUESTION PAPER -->
+<div id="unitQPScreen" class="screen">
+<div class="section-header"><div class="section-title">📄 Unit Question Paper</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div>
+<div class="content-box" style="max-width:900px">
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px" class="no-print">
+<button class="btn-menu b1" style="padding:10px 22px;box-shadow:0 4px 0 rgba(0,0,0,.2)" onclick="printPage()">🖨️ Print Question Paper</button>
+<button class="btn-menu b3" style="padding:10px 22px;box-shadow:0 4px 0 rgba(0,0,0,.2)" onclick="downloadUnitQPasPDF()">⬇️ Download as PDF</button>
+</div>
+<div id="unitQPPaper" class="unit-qp-paper"></div>
+</div>
+</div>
+
+<!-- ABOUT AUTHORS -->
+<div id="bioScreen" class="screen"><div class="section-header"><div class="section-title">👤 About the Authors</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div><div class="content-box" id="bioContainer"></div></div>
+
+<!-- DOORWAY / INTRO -->
+<div id="doorwayScreen" class="screen"><div class="section-header"><div class="section-title">🦋 Let's Log In (Comic Strip)</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div><div class="content-box" id="doorwayContainer"></div></div>
+
+<!-- PROGRESS -->
+<div id="progressScreen" class="screen"><div class="section-header"><div class="section-title">📊 My Progress</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div><div class="content-box" id="progressContainer"></div></div>
+
+<!-- INSTRUCTIONS -->
+<div id="instructionsScreen" class="screen">
+<div class="section-header"><div class="section-title">ℹ️ Instructions</div><button class="back-btn" onclick="showScreen('homeScreen')">Back</button></div>
+<div class="content-box"><div class="instructions-list ml"><ul>
+<li>ഈ ആപ്പ് എട്ടാം ക്ലാസിലെ ഒന്നാമത്തെ യൂണിറ്റായ <b>'Bonds of Life'</b> അടിസ്ഥാനമാക്കി നിർമ്മിച്ചതാണ്.</li>
+<li>ഓരോ മെനുവിൽ നിന്നും 3 പാഠങ്ങൾ തിരഞ്ഞെടുക്കാം:
+  <ol style="margin-left:20px;margin-top:5px">
+    <li><b>A Long Walk with Granny</b> (Short Story – Ruskin Bond)</li>
+    <li><b>The Seven Ages of Man</b> (Poem – William Shakespeare)</li>
+    <li><b>Little Things Matter</b> (Memoir – Dr. A. P. J. Abdul Kalam)</li>
+  </ol>
+</li>
+<li>ക്ലാസ് 8 ലെവലിലുള്ള 10 ഇന്ററാക്ടീവ് ഗെയിമുകൾ, ക്വിസ്, വൊക്കാബുലറി, വ്യാകരണ പ്രവർത്തനങ്ങൾ (Conditionals, Tag Questions, Wh/Yes-No questions) എന്നിവ ഉൾപ്പെടുത്തിയിരിക്കുന്നു.</li>
+<li><b>📄 Unit Question Paper</b> പ്രിന്റ് ചെയ്യാനും PDF ആയി ഡൗൺലോഡ് ചെയ്യാനും സാധിക്കും.</li>
+</ul></div></div>
+</div>
+
+<div class="modal-overlay" id="rewardModal"><div class="reward-card"><div class="reward-icon">🏅</div><h2 class="reward-title">Excellent!</h2><p class="reward-subtitle">You completed this activity!</p><button class="primary-action-btn" onclick="closeRewardModal()">Continue</button></div></div>
+
+<script>
+let state={score:0,lives:5,stars:0,audioEnabled:true,activeGame:null,currentGameIndex:0,gameQueue:[],quizSubmitted:false,currentSection:null,currentLesson:null,lastChooseSection:null,visited:{},seqCurrent:[]};
+
+const LESSONS=[
+{id:'granny',emoji:'👵',title:'A Long Walk with Granny',sub:'Short Story by Ruskin Bond'},
+{id:'seven_ages',emoji:'🎭',title:'The Seven Ages of Man',sub:'Poem by William Shakespeare'},
+{id:'kalam',emoji:'🚀',title:'Little Things Matter',sub:'Memoir by Dr. A. P. J. Abdul Kalam'}
+];
+
+const SECTION_TITLES={
+read:'📖 Choose a Lesson to Read',learn:'🗂️ Learn Words – Choose Lesson',activities:'📝 Activities – Choose Lesson',games:'🎮 Games – Choose Lesson',quiz:'❓ Quiz – Choose Lesson',vocab:'📚 Vocabulary – Choose Lesson',diary:'📔 Diary – Choose Lesson',letter:'✉️ Letter – Choose Lesson',roleplay:'🎭 Role Play – Choose Lesson',grammar:'✏️ Grammar Quest – Choose Lesson',punctuation:'❗ Punctuation – Choose Lesson',wordfun:'🔤 Idioms & Phrasal Verbs',poster:'🪧 Descriptive Writing'
+};
+
+let audioCtx=null,chosenVoice=null;
+function initAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)()}
+function playSound(type){if(!state.audioEnabled)return;initAudio();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);const now=audioCtx.currentTime;if(type==='correct'){osc.type='sine';osc.frequency.setValueAtTime(523.25,now);osc.frequency.exponentialRampToValueAtTime(783.99,now+.3);gain.gain.setValueAtTime(.3,now);gain.gain.exponentialRampToValueAtTime(.01,now+.4);osc.start(now);osc.stop(now+.4)}else if(type==='wrong'){osc.type='sawtooth';osc.frequency.setValueAtTime(220,now);osc.frequency.linearRampToValueAtTime(130,now+.3);gain.gain.setValueAtTime(.3,now);gain.gain.exponentialRampToValueAtTime(.01,now+.35);osc.start(now);osc.stop(now+.35)}else if(type==='click'){osc.type='triangle';osc.frequency.setValueAtTime(400,now);gain.gain.setValueAtTime(.15,now);gain.gain.exponentialRampToValueAtTime(.01,now+.08);osc.start(now);osc.stop(now+.08)}else if(type==='fanfare'){[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.setValueAtTime(f,now+i*.12);g.gain.setValueAtTime(.2,now+i*.12);g.gain.exponentialRampToValueAtTime(.01,now+i*.12+.3);o.start(now+i*.12);o.stop(now+i*.12+.3)})}}
+function pickVoice(){if(!('speechSynthesis'in window))return null;const voices=window.speechSynthesis.getVoices();if(!voices.length)return null;chosenVoice=voices.find(v=>v.lang==='en-IN')||voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang&&v.lang.startsWith('en'))||voices[0];return chosenVoice}
+function speakText(text,onend){if(!state.audioEnabled){if(onend)onend();return}if('speechSynthesis'in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-IN';u.rate=.9;u.pitch=1.02;const v=chosenVoice||pickVoice();if(v)u.voice=v;if(onend)u.onend=onend;u.onerror=function(){if(onend)onend()};window.speechSynthesis.speak(u)}else if(onend)onend()}
+function toggleAudio(){state.audioEnabled=!state.audioEnabled;document.getElementById('btnAudioToggle').innerText=state.audioEnabled?'🔊':'🔇';if(!state.audioEnabled)window.speechSynthesis.cancel()}
+function toggleFullscreen(){if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{})}else if(document.exitFullscreen){document.exitFullscreen()}}
+function printPage(){playSound('click');window.print()}
+function downloadPage(){playSound('click');try{const htmlContent="<!DOCTYPE html>\n"+document.documentElement.outerHTML;const blob=new Blob([htmlContent],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Bonds_of_Life_STD8_Unit1.html';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),3000)}catch(e){alert('Use print function to save as PDF.')}}
+function updateStatsUI(){document.getElementById('valScore').innerText=state.score;document.getElementById('valLives').innerText=state.lives;document.getElementById('valStars').innerText=state.stars;document.getElementById('progressBar').style.width=Math.min(100,state.score/3)+'%'}
+function showRewardModal(){playSound('fanfare');document.getElementById('rewardModal').classList.add('active')}
+function closeRewardModal(){document.getElementById('rewardModal').classList.remove('active');showScreen('homeScreen')}
+function revealModel(id,btn){const el=document.getElementById(id);const showing=el.style.display==='block';el.style.display=showing?'none':'block';if(!showing){state.score+=5;updateStatsUI();if(btn)btn.innerText='🙈 Hide Model'}else if(btn){btn.innerText='💡 Show Model Answer'}}
+function genericCheck(selClass,resultId){const sels=document.querySelectorAll('.'+selClass);let correct=0;sels.forEach(s=>{if(s.value===s.dataset.ans){s.style.borderColor='#4CAF50';correct++}else{s.style.borderColor='#F44336'}});const r=document.getElementById(resultId);r.style.color=correct===sels.length?'#2E7D32':'#C62828';r.innerText=`Score: ${correct}/${sels.length} ${correct===sels.length?'Excellent! Perfect score!':'Try again!'}`;if(correct===sels.length){state.score+=15;state.stars+=1;updateStatsUI();playSound('correct')}else{playSound('wrong')}}
+
+/* CLASS 8 TEXT CONTENT */
+const GRANNY_STORY=[
+  "Granny could hear the distant roar of the river and smell the pine needles, and feel the presence of her grandson, Mani. She couldn't see the river or the trees. She could only make out Mani's fuzzy hair, and sometimes, his blackberry eyes and the gleam of his teeth when he smiled.",
+  "Granny wore a pair of old glasses. She'd been wearing them for well over ten years. Her eyes had grown steadily weaker, and the glasses were now scratched and spotted. Mani and his father felt that it was high time Granny had her eyes tested and got herself new glasses in Mussoorie.",
+  "Granny did not want to be parted from Mani. Mani was eleven and Granny had brought him up ever since his mother had died when he was only a year old. When Mani offered to take her to Mussoorie, Granny was more than ready. 'I may be going blind, but there's nothing wrong with my legs!' she said.",
+  "Early next morning, in a light drizzle, Granny and Mani set out on the path to Nain. Mani carried a bedding-roll and Granny carried a large shopping bag and an umbrella. They walked at a steady pace, ate their light meal under a whispering pine, and reached Uncle's house in Nain.",
+  "Next morning they caught an old, rattling bus to Mussoorie. Suddenly, a huge landslide blocked the road with rocks and trees crashing down. While other passengers turned back, Mani and Granny bravely walked ten miles uphill through a gloomy deodar forest and reached Mussoorie at dusk.",
+  "At the government eye hospital, the doctor examined Granny's eyes. When new lenses were placed in the wire frame, Granny saw Mani clearly for the first time in years. 'Mani! What a fine boy I've brought up!' she exclaimed. On their way back in the bus, as Granny admired distant villages and a rainbow, Mani fell asleep comfortably against her shoulder."
+];
+
+const SEVEN_AGES_POEM=[
+  "All the world's a stage, / And all the men and women merely players; / They have their exits and their entrances; / And one man in his time plays many parts, / His acts being seven ages.",
+  "At first the infant, / Mewling and puking in the nurse's arms; / And then the whining school-boy, with his satchel / And shining morning face, creeping like snail / Unwillingly to school.",
+  "And then the lover, / Sighing like furnace, with a woeful ballad / Made to his mistress' eyebrow. / Then a soldier, / Full of strange oaths, and bearded like the pard, / Jealous in honour, sudden and quick in quarrel, / Seeking the bubble reputation / Even in the cannon's mouth.",
+  "And then the justice, / In fair round belly with good capon lin'd, / With eyes severe and beard of formal cut, / Full of wise saws and modern instances; / And so he plays his part.",
+  "The sixth age shifts / Into the lean and slipper'd pantaloon, / With spectacles on nose and pouch on side; / His youthful hose, well sav'd, a world too wide / For his shrunk shank; and his big manly voice, / Turning again toward childish treble, pipes / And whistles in his sound.",
+  "Last scene of all, / That ends this strange eventful history, / Is second childishness and mere oblivion; / Sans teeth, sans eyes, sans taste, sans everything."
+];
+
+const KALAM_STORY=[
+  "I was born in the year 1931 in Rameswaram. When I was about eight, World War II broke out. The only source of information about the outside world was the newspaper distributed by my cousin Samsuddin. Along with Jalalluddin, he was a big influence in my early life.",
+  "As World War II raged, the rail stop at Rameswaram station was done away with. The newspaper bundles had to be tossed out on to the platform from the moving train on the Rameswaram-Dhanushkodi track. Samsuddin offered me the enjoyable job of collecting and distributing these bundles!",
+  "My enthusiasm knew no bounds. I was only eight, but I was going to contribute in a meaningful way to the household income! My mother and grandmother were compromising on their own nutrition to feed the children during the war rationing.",
+  "My day began before dawn. After an early bath, I took mathematics tuition from my teacher at dawn, went to the Arabic school, and then sprinted to the railway station to catch the flying bundles like clockwork. For about an hour I tore around Rameswaram delivering papers.",
+  "In the evening after school, I collected dues and sat by the seashore with Samsuddin and Jalalluddin, poring over the Dinamani paper and listening to discussions about Gandhiji, Congress, Hitler, and Periyar.",
+  "In that one year, I grew taller and browner and mastered time management. Knowing that my earnings were helping my family, and that my mother was secretly proud of me for being a working man at the age of eight, kept me going with a smile."
+];
+
+const LESSON_QA={
+  granny:[
+    ['Why did Granny need to go to Mussoorie?','Granny had worn the same scratched glasses for ten years and her eyesight had grown steadily weaker; there was no eye hospital in her village.'],
+    ['How did Mani and Granny overcome the landslide?','They chose to walk the ten-mile shortcut up the mountain path and through the gloomy deodar forest instead of turning back.'],
+    ['What was Granny’s reaction when she got her new glasses?','She clapped her hands with joy, praised Mani, and lovingly pointed out that he needed a haircut and new clothes!'],
+    ['How does the story highlight the bond between generations?','Mani cared for Granny by holding her hand and guiding her, while Granny showered affection, bought him shoes, and gave him a shoulder to sleep on.']
+  ],
+  seven_ages:[
+    ['What is the world compared to in the poem?','The world is compared to a stage, and all men and women to players (actors) with exits and entrances.'],
+    ['How is the school-boy described?','Whining, carrying his satchel with a shining morning face, creeping unwillingly to school like a snail.'],
+    ['What does "bubble reputation" mean in the soldier’s stage?','It means short-lived, transient fame that can burst easily like a bubble.'],
+    ['Explain the meaning of "Sans teeth, sans eyes, sans taste, sans everything".','"Sans" means without. In the final stage (second childishness), an old person loses teeth, eyesight, taste, and all faculties.']
+  ],
+  kalam:[
+    ['Why were newspaper bundles tossed from the moving train?','Because the train halt at Rameswaram station was cancelled during World War II emergency conditions.'],
+    ['Why was young Kalam delighted to take up the job?','He was thrilled to contribute to his family’s income at the age of eight when food rationing was severe.'],
+    ['Describe Kalam’s early morning schedule.','Waking before dawn, bathing, 1 hour maths tuition, Arabic school, sprinting to the station, and distributing papers before 8 AM.'],
+    ['What important values did Kalam learn from his experience?','Responsibility, time management, punctuality, hard work, and the dignity of labour.']
+  ]
+};
+
+const VOCAB_BY_LESSON={
+  granny:[
+    {id:'debris',word:'debris',meaning:'അവശിഷ്ടങ്ങൾ / പാറക്കല്ലുകൾ',letters:['d','e','b','r','i','s'],missingLetter:'b',missingDisplay:'de_ris',emoji:'🪨'},
+    {id:'rickety',word:'rickety',meaning:'പഴകി തകരാറിലായ',letters:['r','i','c','k','e','t','y'],missingLetter:'k',missingDisplay:'ric_ety',emoji:'🚌'},
+    {id:'sombre',word:'sombre',meaning:'ഇരുണ്ട / മൂടിക്കെട്ടിയ',letters:['s','o','m','b','r','e'],missingLetter:'m',missingDisplay:'so_bre',emoji:'☁️'},
+    {id:'portly',word:'portly',meaning:'തടിച്ച / പ്രൗഢിയുള്ള',letters:['p','o','r','t','l','y'],missingLetter:'t',missingDisplay:'por_ly',emoji:'👨‍⚕️'},
+    {id:'scamper',word:'scamper',meaning:'വേഗത്തിൽ ഓടുക',letters:['s','c','a','m','p','e','r'],missingLetter:'a',missingDisplay:'sc_mper',emoji:'🏃'}
+  ],
+  seven_ages:[
+    {id:'satchel',word:'satchel',meaning:'തോളിലിടുന്ന സ്കൂൾ ബാഗ്',letters:['s','a','t','c','h','e','l'],missingLetter:'t',missingDisplay:'sa_chel',emoji:'🎒'},
+    {id:'mewling',word:'mewling',meaning:'കരയുന്ന / ഞരങ്ങുന്ന',letters:['m','e','w','l','i','n','g'],missingLetter:'w',missingDisplay:'me_ling',emoji:'👶'},
+    {id:'pantaloon',word:'pantaloon',meaning:'തമാശക്കാരനായ വൃദ്ധൻ',letters:['p','a','n','t','a','l','o','o','n'],missingLetter:'a',missingDisplay:'pant_loon',emoji:'👴'},
+    {id:'oblivion',word:'oblivion',meaning:'മറവി / വിസ്മൃതി',letters:['o','b','l','i','v','i','o','n'],missingLetter:'l',missingDisplay:'ob_ivion',emoji:'🌫️'},
+    {id:'furnace',word:'furnace',meaning:'തീച്ചൂള / ബൊയ്‌ലർ',letters:['f','u','r','n','a','c','e'],missingLetter:'r',missingDisplay:'fu_nace',emoji:'🔥'}
+  ],
+  kalam:[
+    {id:'crescendo',word:'crescendo',meaning:'ഉച്ചസ്ഥായി / പാരമ്യത',letters:['c','r','e','s','c','e','n','d','o'],missingLetter:'s',missingDisplay:'cre_cendo',emoji:'📈'},
+    {id:'sanctions',word:'sanctions',meaning:'നിയന്ത്രണങ്ങൾ / ഉപരോധം',letters:['s','a','n','c','t','i','o','n','s'],missingLetter:'c',missingDisplay:'san_tions',emoji:'📜'},
+    {id:'morsel',word:'morsel',meaning:'ഒരു ചെറിയ കഷ്ണം ഭക്ഷണം',letters:['m','o','r','s','e','l'],missingLetter:'s',missingDisplay:'mor_el',emoji:'🍞'},
+    {id:'flung',word:'flung',meaning:'ശക്തിയായി എറിഞ്ഞു',letters:['f','l','u','n','g'],missingLetter:'u',missingDisplay:'fl_ng',emoji:'📦'},
+    {id:'aptitude',word:'aptitude',meaning:'സ്വാഭാവിക കഴിവ് / താല്പര്യം',letters:['a','p','t','i','t','u','d','e'],missingLetter:'t',missingDisplay:'ap_itude',emoji:'🧠'}
+  ]
+};
+
+const QUIZ_BY_LESSON={
+  granny:[
+    {q:'Why did Granny agree to go to Mussoorie?',opts:['She loved city shopping','Mani offered to take her','Her doctor called her','She wanted a vacation'],ans:1},
+    {q:'What caused the road to Mussoorie to be blocked?',opts:['Heavy snow','A major landslide','A broken bridge','A bus breakdown'],ans:1},
+    {q:'What did the doctor do with Granny\'s old glasses at first?',opts:['Cleaned them','Threw them in the wastebasket','Sold them','Kept them in a case'],ans:1},
+    {q:'Who wrote "A Long Walk with Granny"?',opts:['A.P.J. Abdul Kalam','Ruskin Bond','William Shakespeare','R.K. Narayan'],ans:1}
+  ],
+  seven_ages:[
+    {q:'How many stages of human life are described in Shakespeare\'s poem?',opts:['Five','Seven','Ten','Four'],ans:1},
+    {q:'"Creeping like snail unwillingly to school" is an example of which figure of speech?',opts:['Metaphor','Simile','Personification','Alliteration'],ans:1},
+    {q:'Which stage is described as having "fair round belly with good capon lined"?',opts:['The Soldier','The Justice','The Lover','The Pantaloon'],ans:1},
+    {q:'"All the world\'s a stage" is an example of a _____ .',opts:['Simile','Metaphor','Hyperbole','Irony'],ans:1}
+  ],
+  kalam:[
+    {q:'Who ran the only newspaper agency in Rameswaram?',opts:['Jalalluddin','Samsuddin','Kalam\'s father','Mr. Kumar'],ans:1},
+    {q:'Why did young Kalam need to catch bundles thrown from the moving train?',opts:['The train was too fast','The train stop at Rameswaram had been cancelled','He was testing his sprint','To save money'],ans:1},
+    {q:'Which Tamil newspaper was most popular in Rameswaram?',opts:['The Hindu','Dinamani','Swadesamitran','Mathrubhumi'],ans:1},
+    {q:'How old was Kalam when he started distributing newspapers?',opts:['Fifteen','Eight','Twelve','Six'],ans:1}
+  ]
+};
+
+const CHAR_QUOTES={
+  granny:[
+    {quote:'"I may be going blind, but there\'s nothing wrong with my legs!"',ans:'Granny',opts:['Granny','Mani','Father','Doctor']},
+    {quote:'"On second thought, I think I\'ll send them to a museum."',ans:'Eye Specialist',opts:['Eye Specialist','Mani','Uncle','Driver']},
+    {quote:'"Can you see all right, Granny?"',ans:'Mani',opts:['Mani','Doctor','Father','Uncle']}
+  ],
+  seven_ages:[
+    {quote:'"All the world\'s a stage, and all the men and women merely players."',ans:'William Shakespeare',opts:['William Shakespeare','Ruskin Bond','Abdul Kalam','Mahatma Gandhi']},
+    {quote:'"Sans teeth, sans eyes, sans taste, sans everything."',ans:'The Last Stage (Oblivion)',opts:['The Last Stage (Oblivion)','The Infant','The Justice','The Soldier']}
+  ],
+  kalam:[
+    {quote:'"My enthusiasm knew no bounds. I was going to contribute in a meaningful way to the household income!"',ans:'A. P. J. Abdul Kalam',opts:['A. P. J. Abdul Kalam','Samsuddin','Jalalluddin','Mr. Kumar']},
+    {quote:'"Would you like to join the team?"',ans:'Samsuddin',opts:['Samsuddin','Kalam','Mathematics Teacher','Station Master']}
+  ]
+};
+
+const SYN_ANT={
+  granny:[
+    {prompt:'Synonym of "Sombre"',ans:'Gloomy / Dark',opts:['Gloomy / Dark','Cheerful','Bright','Sunny']},
+    {prompt:'Antonym of "Rickety"',ans:'Sturdy / Strong',opts:['Sturdy / Strong','Weak','Old','Shaky']}
+  ],
+  seven_ages:[
+    {prompt:'Synonym of "Woeful"',ans:'Sorrowful / Sad',opts:['Sorrowful / Sad','Joyful','Excited','Angry']},
+    {prompt:'Antonym of "Oblivion"',ans:'Remembrance / Awareness',opts:['Remembrance / Awareness','Forgetfulness','Darkness','Silence']}
+  ],
+  kalam:[
+    {prompt:'Synonym of "Aptitude"',ans:'Talent / Ability',opts:['Talent / Ability','Dislike','Weakness','Failure']},
+    {prompt:'Antonym of "Acute"',ans:'Mild / Minor',opts:['Mild / Minor','Severe','Sharp','Crucial']}
+  ]
+};
+
+const SENT_COMP={
+  granny:[
+    {sent:'Granny and Mani walked to Mussoorie because of a _______ on the road.',ans:'landslide',opts:['landslide','strike','storm','flood']},
+    {sent:'Granny bought a Tibetan woollen _______ for Mani\'s father.',ans:'pullover',opts:['pullover','blanket','umbrella','cap']}
+  ],
+  seven_ages:[
+    {sent:'The school-boy creeps like a _______ unwillingly to school.',ans:'snail',opts:['snail','snake','tortoise','worm']},
+    {sent:'The soldier seeks the bubble _______ even in the cannon\'s mouth.',ans:'reputation',opts:['reputation','wealth','pleasure','honour']}
+  ],
+  kalam:[
+    {sent:'Samsuddin became a _______ light for young Kalam.',ans:'guiding',opts:['guiding','fading','harsh','dim']},
+    {sent:'Kalam distributed the popular Tamil newspaper _______.',ans:'Dinamani',opts:['Dinamani','The Hindu','Daily Thanthi','Mitra']}
+  ]
+};
+
+const SEQ_EVENTS_BY_LESSON={
+  granny:[
+    {text:'Mani and his father decide Granny needs new glasses.',order:1},
+    {text:'Granny agrees to go when Mani offers to guide her.',order:2},
+    {text:'They walk down to Nain and stay at Uncle\'s home.',order:3},
+    {text:'A landslide halts the bus, and they hike 10 miles uphill.',order:4},
+    {text:'Granny gets tested and sees Mani clearly with joy.',order:5},
+    {text:'They return home on the bus as Mani sleeps on Granny\'s shoulder.',order:6}
+  ],
+  seven_ages:[
+    {text:'Infant: Mewling and crying in the nurse\'s arms.',order:1},
+    {text:'School-boy: Creeping like a snail unwillingly to school.',order:2},
+    {text:'Lover: Sighing with a woeful ballad.',order:3},
+    {text:'Soldier: Seeking bubble reputation in the cannon\'s mouth.',order:4},
+    {text:'Justice: With wise sayings and formal beard.',order:5},
+    {text:'Pantaloon & Oblivion: Shrunk shank, second childishness sans everything.',order:6}
+  ],
+  kalam:[
+    {text:'World War II creates emergency sanctions and shortages in Rameswaram.',order:1},
+    {text:'The train halt at Rameswaram station is cancelled.',order:2},
+    {text:'Samsuddin offers Kalam the job of catching newspaper bundles.',order:3},
+    {text:'Kalam balances morning mathematics tuition, Arabic school, and delivery.',order:4},
+    {text:'In the evening, they read Dinamani and discuss world events by the beach.',order:5},
+    {text:'Kalam becomes proud of being a self-reliant working boy at age eight.',order:6}
+  ]
+};
+
+function showScreen(id){playSound('click');if('speechSynthesis'in window)window.speechSynthesis.cancel();document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const t=document.getElementById(id);if(t)t.classList.add('active');if(id==='modelQPScreen')renderModelQP();if(id==='unitQPScreen')renderUnitQP();if(id==='bioScreen')renderBio();if(id==='doorwayScreen')renderDoorway();if(id==='progressScreen')renderProgress()}
+function openChoose(section){state.currentSection=section;state.lastChooseSection=section;document.getElementById('chooseTitle').innerText=SECTION_TITLES[section]||'Choose a Lesson';const list=document.getElementById('chooseList');list.innerHTML='';LESSONS.forEach(L=>{const d=document.createElement('div');d.className='lesson-pick';d.innerHTML=`<div class="lp-emoji">${L.emoji}</div><div><div class="lp-title">${L.title}</div><div class="lp-sub">${L.sub}</div></div>`;d.onclick=()=>selectLesson(L.id);list.appendChild(d)});showScreen('chooseScreen')}
+function selectLesson(lessonId){state.currentLesson=lessonId;state.visited[state.currentSection+'_'+lessonId]=true;if(state.currentSection==='games'){openGamesMenu(lessonId);return}renderContentFor(state.currentSection,lessonId)}
+function goBackFromContent(){if(state.lastChooseSection)openChoose(state.lastChooseSection);else showScreen('homeScreen')}
+function openGamesMenu(lessonId){const L=LESSONS.find(x=>x.id===lessonId);document.getElementById('gamesMenuTitle').innerText=`🎮 Games – ${L?L.title:''}`;document.getElementById('gamesButtons').innerHTML=`<button class="btn-menu b1" onclick="launchGame(1)">🖼️ Picture Detective</button><button class="btn-menu b2" onclick="launchGame(2)">🔗 Word–Meaning Match</button><button class="btn-menu b3" onclick="launchGame(3)">🔍 Missing Letter Hunter</button><button class="btn-menu b4" onclick="launchGame(4)">🧩 Word Builder</button><button class="btn-menu b5" onclick="launchGame(5)">🎧 Listening Challenge</button><button class="btn-menu b9" onclick="launchGame(6)">🌟 Meaning Master</button><button class="btn-menu b6" onclick="launchGame(7)">📋 Sequence the Events</button><button class="btn-menu b10" onclick="launchGame(8)">🎭 Who Said / Did It?</button><button class="btn-menu b14" onclick="launchGame(9)">🔄 Synonym / Antonym</button><button class="btn-menu b15" onclick="launchGame(10)">📝 Sentence Completer</button>`;showScreen('gamesMenuScreen')}
+
+function renderContentFor(section,lessonId){const L=LESSONS.find(x=>x.id===lessonId);document.getElementById('contentTitle').innerText=(SECTION_TITLES[section]||section)+' → '+(L?L.title:'');const body=document.getElementById('contentBody');body.innerHTML='';if(section==='read')renderRead(body,lessonId);else if(section==='learn')renderLearn(body,lessonId);else if(section==='activities')renderActivities(body,lessonId);else if(section==='quiz')renderQuiz(body,lessonId);else if(section==='vocab')renderVocab(body,lessonId);else if(section==='diary')renderDiary(body,lessonId);else if(section==='letter')renderLetter(body,lessonId);else if(section==='roleplay')renderRoleplay(body,lessonId);else if(section==='grammar')renderGrammar(body,lessonId);else if(section==='punctuation')renderPunctuation(body,lessonId);else if(section==='wordfun')renderWordFun(body,lessonId);else if(section==='poster')renderPoster(body,lessonId);showScreen('contentScreen')}
+
+function renderRead(body,lessonId){let lines=[],qa=[],title='';if(lessonId==='granny'){lines=GRANNY_STORY;qa=LESSON_QA.granny;title='👵 A Long Walk with Granny'}else if(lessonId==='seven_ages'){lines=SEVEN_AGES_POEM;qa=LESSON_QA.seven_ages;title='🎭 The Seven Ages of Man'}else{lines=KALAM_STORY;qa=LESSON_QA.kalam;title='🚀 Little Things Matter'}
+body.innerHTML=`<div class="story-title-wrap"><span class="story-title">${title}</span></div><button class="read-all-btn" id="readAllBtn">🔊 Read Text Aloud</button><div id="storyParas"></div><div class="activity-block" style="margin-top:20px"><div class="activity-heading">🔎 Let's Explore &amp; Reflect</div><div id="qaBox"></div></div>`;
+const paras=document.getElementById('storyParas');lines.forEach(line=>{const div=document.createElement('div');div.className='story-para';div.innerHTML=`<p>${line}</p><button class="mini-play" onclick="speakText(this.dataset.t)" data-t="${line.replace(/"/g,'&quot;')}">🔊</button>`;paras.appendChild(div)});
+const qaBox=document.getElementById('qaBox');qa.forEach((item,i)=>{const el=document.createElement('div');el.className='qa-line';el.innerHTML=`<div class="q">${i+1}. ${item[0]}</div><div class="a" id="qa${i}">${item[1]}</div><button class="reveal-btn" onclick="document.getElementById('qa${i}').classList.toggle('show')">💡 Show Answer</button>`;qaBox.appendChild(el)});
+let reading=false;document.getElementById('readAllBtn').onclick=function(){if(reading){window.speechSynthesis.cancel();reading=false;this.innerText='🔊 Read Text Aloud';return}reading=true;this.innerText='⏹️ Stop Reading';let i=0;function next(){if(i>=lines.length||!reading){reading=false;document.getElementById('readAllBtn').innerText='🔊 Read Text Aloud';return}speakText(lines[i],()=>{i++;next()})}next()}}
+
+function renderLearn(body,lessonId){const vocab=VOCAB_BY_LESSON[lessonId]||[];body.innerHTML=`<div class="cards-grid" id="learnGrid"></div>`;const grid=document.getElementById('learnGrid');vocab.forEach(item=>{const card=document.createElement('div');card.className='word-card';card.onclick=()=>{card.classList.add('playing');speakText(item.word);playSound('click');setTimeout(()=>card.classList.remove('playing'),1200)};card.innerHTML=`<div class="card-emoji">${item.emoji}</div><div class="word-eng">${item.word}</div><div class="word-meaning ml">${item.meaning}</div><button class="replay-btn">🔊 Listen</button>`;grid.appendChild(card)})}
+
+function renderActivities(body,lessonId){
+  if(lessonId==='granny'){
+    body.innerHTML=`<div class="activity-heading">📝 Activities – A Long Walk with Granny</div>
+    <div class="activity-block"><div class="activity-sub"><b>Activity 1: Descriptive Adjectives</b><br>List descriptive words used by Mani (e.g. snow-capped peak, crystal-clear water, tall dark green trees, whispering pine).</div></div>
+    <div class="activity-block"><div class="activity-sub"><b>Activity 2: Character Sketch of Granny</b><br>Write about Granny's determination, unconditional love for Mani, and cheerful spirit.</div><textarea class="diary-area" placeholder="Granny was a 70-year-old woman with deep courage..."></textarea></div>
+    <button class="reveal-model-btn" onclick="revealModel('grannyModelAct',this)">💡 Show Model</button>
+    <div class="model-answer-box" id="grannyModelAct">Granny represents enduring love and willpower. Despite failing eyesight, she walked uphill across landslides with humor and bravery.</div>`;
+  } else if(lessonId==='seven_ages'){
+    body.innerHTML=`<div class="activity-heading">📝 Activities – The Seven Ages of Man</div>
+    <div class="activity-block"><div class="activity-sub"><b>Activity 1: Identifying Figures of Speech</b><br>1. "Creeping like snail" → <b>Simile</b><br>2. "All the world's a stage" → <b>Metaphor</b><br>3. "Sighing like furnace" → <b>Simile</b><br>4. "Bubble reputation" → <b>Metaphor</b></div></div>
+    <div class="activity-block"><div class="activity-sub"><b>Activity 2: Complete the Seven Stages</b><br>Infant → School-boy → Lover → Soldier → Justice → Pantaloon → Second Childishness</div></div>`;
+  } else {
+    body.innerHTML=`<div class="activity-heading">📝 Activities – Little Things Matter</div>
+    <div class="activity-block"><div class="activity-sub"><b>Activity 1: Formal Letter Writing</b><br>Kalam writes to the Railway Divisional Manager requesting to reinstate the train stop at Rameswaram station.</div><textarea class="diary-area" placeholder="From: A.P.J. Abdul Kalam... To: The Divisional Manager..."></textarea></div>
+    <button class="reveal-model-btn" onclick="revealModel('kalamModelAct',this)">💡 Show Model Letter</button>
+    <div class="model-answer-box" id="kalamModelAct"><b>Subject:</b> Request to reinstate train stop at Rameswaram.<br><b>Respected Sir,</b> As the cancellation of train stop causes acute distress for newspaper distribution and essential supplies, I humbly request your immediate intervention to restore the stop.</div>`;
+  }
+}
+
+function renderQuiz(body,lessonId){const quiz=QUIZ_BY_LESSON[lessonId]||[];state.quizSubmitted=false;body.innerHTML=`<div id="quizScoreBox" style="display:none" class="quiz-score-box"></div><div id="quizContainer"></div><div style="text-align:center"><button class="submit-quiz-btn" onclick="submitQuiz('${lessonId}')">✅ Submit Answers</button></div>`;const c=document.getElementById('quizContainer');quiz.forEach((item,qi)=>{const qd=document.createElement('div');qd.className='quiz-q';qd.innerHTML=`<div class="qtext">${qi+1}. ${item.q}</div><div class="quiz-opts" id="qopts${qi}"></div>`;c.appendChild(qd);const od=qd.querySelector('#qopts'+qi);item.opts.forEach((opt,oi)=>{const b=document.createElement('div');b.className='quiz-opt';b.innerText=opt;b.dataset.qi=qi;b.dataset.oi=oi;b.onclick=()=>{if(state.quizSubmitted)return;document.querySelectorAll(`#qopts${qi} .quiz-opt`).forEach(e=>e.classList.remove('picked'));b.classList.add('picked');playSound('click')};od.appendChild(b)})})}
+function submitQuiz(lessonId){if(state.quizSubmitted)return;state.quizSubmitted=true;const quiz=QUIZ_BY_LESSON[lessonId]||[];let score=0;quiz.forEach((item,qi)=>{const opts=document.querySelectorAll(`#qopts${qi} .quiz-opt`);const picked=document.querySelector(`#qopts${qi} .picked`);if(picked&&parseInt(picked.dataset.oi)===item.ans)score++;opts.forEach(o=>{if(parseInt(o.dataset.oi)===item.ans)o.classList.add('correct-ans');else if(o.classList.contains('picked'))o.classList.add('wrong-ans')})});state.score+=score*10;state.stars+=(score>=Math.ceil(quiz.length*.8)?2:1);updateStatsUI();const box=document.getElementById('quizScoreBox');box.style.display='block';box.innerHTML=`Your Score: ${score} / ${quiz.length} ${score>=Math.ceil(quiz.length*.8)?'🎉 Excellent!':'Keep practicing!'}`;playSound(score>=Math.ceil(quiz.length*.8)?'fanfare':'correct')}
+
+function renderVocab(body,lessonId){const vocab=VOCAB_BY_LESSON[lessonId]||[];body.innerHTML=`<table class="vocab-table"><thead><tr><th>Word</th><th>Meaning (മലയാളം)</th></tr></thead><tbody>${vocab.map(v=>`<tr><td><span class="vocab-emoji">${v.emoji}</span> <b>${v.word}</b></td><td class="ml">${v.meaning}</td></tr>`).join('')}</tbody></table>`}
+
+function renderDiary(body,lessonId){
+  if(lessonId==='granny'){
+    body.innerHTML=`<div class="activity-heading">📔 Diary Entry – The Eye Specialist</div>
+    <div class="activity-sub">Imagine you are the doctor who treated Granny. Record your feelings after meeting the courageous grandmother and Mani.</div>
+    <textarea class="diary-area" placeholder="Mussoorie, Wednesday... What an unforgettable day..."></textarea>
+    <button class="reveal-model-btn" onclick="revealModel('docDiaryModel',this)">💡 Show Model</button>
+    <div class="model-answer-box" id="docDiaryModel"><b>Dear Diary,</b><br>Today an old woman with a ten-year-old scratched pair of glasses came to my clinic. Her grandson Mani walked miles through a landslide just to get her treated. The joy on her face when she saw Mani clearly was priceless. It renewed my faith in human affection.<br>- Dr. Eye Specialist</div>`;
+  } else if(lessonId==='kalam'){
+    body.innerHTML=`<div class="activity-heading">📔 Diary Entry – Young Abdul Kalam</div>
+    <div class="activity-sub">Write Kalam's diary on the day he successfully caught the flying newspaper bundles and supported his family.</div>
+    <textarea class="diary-area" placeholder="Rameswaram, 1939... Today was a tiring yet joyous day..."></textarea>
+    <button class="reveal-model-btn" onclick="revealModel('kalamDiaryModel',this)">💡 Show Model</button>
+    <div class="model-answer-box" id="kalamDiaryModel"><b>Dear Diary,</b><br>My first day catching bundles from the moving Madras Mail! I was up at 4 AM, completed tuition and Arabic classes, and sprinted across the town. Handing my wages to mother brought tears of joy to her eyes. I am proud to be a working man at eight.<br>- A.P.J. Abdul Kalam</div>`;
+  } else {
+    body.innerHTML=`<div class="activity-heading">📔 Diary Entry – Reflections on Human Life</div>
+    <div class="activity-sub">Reflect on the Seven Ages of Man and note which stage you currently belong to.</div>
+    <textarea class="diary-area" placeholder="I am in the second stage of life..."></textarea>`;
+  }
+}
+
+function renderLetter(body,lessonId){
+  if(lessonId==='granny'){
+    body.innerHTML=`<div class="activity-heading">✉️ Formal Letter – Report Landslide & Road Clearance</div>
+    <div class="activity-sub">Write a letter to the Road Transport Authority (RTA) requesting immediate clearance of the landslide debris on the Nain-Mussoorie road.</div>
+    <textarea class="diary-area" placeholder="To: The Executive Engineer, Road Transport Authority..."></textarea>`;
+  } else if(lessonId==='kalam'){
+    body.innerHTML=`<div class="activity-heading">✉️ Official Letter – Reinstate Train Halt</div>
+    <div class="activity-sub">Formal letter from young Kalam to Southern Railway authorities.</div>
+    <textarea class="diary-area" placeholder="To: The Divisional Manager, Southern Railway..."></textarea>`;
+  } else {
+    body.innerHTML=`<div class="activity-heading">✉️ Informal Letter – To an Old Friend</div>
+    <div class="activity-sub">Write a letter to a friend sharing how time changes human roles across life's stages.</div>
+    <textarea class="diary-area" placeholder="Dear friend..."></textarea>`;
+  }
+}
+
+function renderRoleplay(body,lessonId){
+  if(lessonId==='granny'){
+    body.innerHTML=`<div class="activity-heading">🎭 Conversation: Granny & Doctor</div>
+    <div class="script-line"><b>Doctor:</b> (Looking at old glasses) I think I'll send these to a museum! You should have changed them years ago.</div>
+    <div class="script-line"><b>Granny:</b> I can't even see the board, doctor!</div>
+    <div class="script-line"><b>Doctor:</b> (Testing lenses) Can you see me now?</div>
+    <div class="script-line"><b>Granny:</b> Most of you! There's quite a lot of you to see!</div>
+    <div class="script-line"><b>Doctor:</b> (Laughs) Now turn around and look at your grandson.</div>
+    <div class="script-line"><b>Granny:</b> Mani! What a fine boy I've brought up!</div>`;
+  } else if(lessonId==='kalam'){
+    body.innerHTML=`<div class="activity-heading">🎭 Conversation: Samsuddin & Kalam</div>
+    <div class="script-line"><b>Samsuddin:</b> Abdul, the train won't stop at Rameswaram station anymore due to war emergency.</div>
+    <div class="script-line"><b>Kalam:</b> How will we collect the papers then?</div>
+    <div class="script-line"><b>Samsuddin:</b> They will be flung onto the platform from the moving train. Would you like to collect and deliver them?</div>
+    <div class="script-line"><b>Kalam:</b> Yes, brother! I would love to help!</div>`;
+  } else {
+    body.innerHTML=`<div class="activity-heading">🎭 Dialogue: The Seven Ages of Life</div>
+    <div class="script-line"><b>Jacques:</b> All the world's a stage, and all the men and women merely players!</div>
+    <div class="script-line"><b>Speaker 2:</b> And one man in his time plays seven distinct roles!</div>`;
+  }
+}
+
+function renderGrammar(body,lessonId){
+  body.innerHTML=`<div class="activity-heading">✏️ Grammar Quest (Class 8 Focus)</div>
+  <div class="activity-block">
+    <div class="activity-sub"><b>1. Conditionals (Type 1 &amp; Type 2)</b></div>
+    <p>a) If we care for nature, nature <select class="g-sel" data-ans="will"><option value="">?</option><option value="will">will protect</option><option value="would">would protect</option></select> us. (Type 1)</p>
+    <p>b) If she got new glasses, she <select class="g-sel" data-ans="could"><option value="">?</option><option value="can">can see</option><option value="could">could see</option></select> properly. (Type 2)</p>
+    <p>c) If you obey traffic rules, you <select class="g-sel" data-ans="can"><option value="">?</option><option value="can">can avoid</option><option value="could">could avoid</option></select> accidents.</p>
+    <button class="check-btn" onclick="genericCheck('g-sel','gRes1')">Check Conditionals</button>
+    <div id="gRes1" class="result-msg"></div>
+  </div>
+  <div class="activity-block">
+    <div class="activity-sub"><b>2. Question Tags</b></div>
+    <p>a) Kalam was a responsible child, <select class="gt-sel" data-ans="wasnt"><option value="">?</option><option value="wasnt">wasn't he?</option><option value="was">was he?</option></select></p>
+    <p>b) Mani couldn't walk as fast as Granny, <select class="gt-sel" data-ans="could"><option value="">?</option><option value="could">could he?</option><option value="couldnt">couldn't he?</option></select></p>
+    <p>c) Sharing and caring are noble values, <select class="gt-sel" data-ans="arent"><option value="">?</option><option value="arent">aren't they?</option><option value="are">are they?</option></select></p>
+    <button class="check-btn" onclick="genericCheck('gt-sel','gRes2')">Check Tags</button>
+    <div id="gRes2" class="result-msg"></div>
+  </div>`;
+}
+
+function renderPunctuation(body,lessonId){
+  body.innerHTML=`<div class="activity-heading">❗ Editing &amp; Punctuation</div>
+  <div class="activity-block">
+    <div class="activity-sub">Edit the passage below by selecting correct auxiliary and pronouns:</div>
+    <p>Mani: "We'll have to go to Mussoorie for your glasses."</p>
+    <p>Granny: "It'll take two days to reach there. <select class="p-sel" data-ans="Who"><option value="">?</option><option value="Who">Who</option><option value="What">What</option></select> will take me?"</p>
+    <p>Mani: "<select class="p-sel" data-ans="Can"><option value="">?</option><option value="Can">Can</option><option value="Are">Are</option></select> you walk all the way to Nain?"</p>
+    <p>Mani: "You are really great, <select class="p-sel" data-ans="aren't you"><option value="">?</option><option value="aren't you">aren't you?</option><option value="wasn't I">wasn't I?</option></select>"</p>
+    <button class="check-btn" onclick="genericCheck('p-sel','pRes')">Check Editing</button>
+    <div id="pRes" class="result-msg"></div>
+  </div>`;
+}
+
+function renderWordFun(body,lessonId){
+  body.innerHTML=`<div class="activity-heading">🔤 Idioms &amp; Phrasal Verbs</div>
+  <div class="activity-block">
+    <div class="activity-sub"><b>Match the Idiom with Meaning:</b></div>
+    <p>1. <b>Keep an eye out</b> → To watch carefully</p>
+    <p>2. <b>Stay in touch</b> → Stay connected</p>
+    <p>3. <b>Keep one's word</b> → Do what one promised</p>
+    <p>4. <b>Guiding light</b> → An inspiring mentor</p>
+  </div>
+  <div class="activity-block">
+    <div class="activity-sub"><b>Phrasal Verbs from the Unit:</b></div>
+    <p>• <b>Broke out</b>: Began suddenly (e.g. World War II broke out)</p>
+    <p>• <b>Pore over</b>: Read or study carefully (e.g. Pore over Dinamani)</p>
+    <p>• <b>Toss out</b>: Throw away / fling out</p>
+    <p>• <b>Carry on</b>: Continue</p>
+  </div>`;
+}
+
+function renderPoster(body,lessonId){
+  body.innerHTML=`<div class="activity-heading">🪧 Descriptive Writing &amp; Travel Journal</div>
+  <div class="activity-block">
+    <div class="activity-sub">Write a travelogue journal entry on scenic mountain beauty or your school trip (referring to Ooty trip layout in textbook).</div>
+    <textarea class="diary-area" placeholder="Destination: Mussoorie Hills / Ooty... Morning: Fresh mountain breeze and misty pine trees..."></textarea>
+  </div>`;
+}
+
+function renderBio(){
+  document.getElementById('bioContainer').innerHTML=`
+  <div class="bio-card">
+    <div class="bio-photo">✍️</div>
+    <h3 style="color:#2E7D32;text-align:center;margin-bottom:10px">Ruskin Bond (1934 - )</h3>
+    <div class="bio-row"><span class="bio-label">Born:</span><span>Kasauli, Himachal Pradesh</span></div>
+    <div class="bio-row"><span class="bio-label">Famous Works:</span><span>The Room on the Roof, The Blue Umbrella, Our Trees Still Grow in Dehra</span></div>
+    <div class="bio-row"><span class="bio-label">Honours:</span><span>Sahitya Akademi Award (1992), Padma Shri (1999), Padma Bhushan (2014)</span></div>
+  </div>
+  <div class="bio-card">
+    <div class="bio-photo">🎭</div>
+    <h3 style="color:#2E7D32;text-align:center;margin-bottom:10px">William Shakespeare (1564 - 1616)</h3>
+    <div class="bio-row"><span class="bio-label">Title:</span><span>The Bard of Avon</span></div>
+    <div class="bio-row"><span class="bio-label">Notable Works:</span><span>37 plays, 154 sonnets (As You Like It, Hamlet, Macbeth)</span></div>
+  </div>
+  <div class="bio-card">
+    <div class="bio-photo">🚀</div>
+    <h3 style="color:#2E7D32;text-align:center;margin-bottom:10px">Dr. A. P. J. Abdul Kalam (1931 - 2015)</h3>
+    <div class="bio-row"><span class="bio-label">Role:</span><span>Scientist, Statesman &amp; 11th President of India</span></div>
+    <div class="bio-row"><span class="bio-label">Famous Books:</span><span>Wings of Fire, Ignited Minds, India 2020, My Journey</span></div>
+    <div class="bio-row"><span class="bio-label">Highest Honour:</span><span>Bharat Ratna (1997)</span></div>
+  </div>`;
+}
+
+function renderDoorway(){
+  document.getElementById('doorwayContainer').innerHTML=`
+  <div class="activity-block">
+    <div class="activity-heading">🎨 Unit 1 Entrance: "Pickles" Comic Strip by Brian Crane</div>
+    <p style="margin-bottom:10px"><b>Grandfather:</b> "Life was a lot more dangerous when I was a kid... We didn't have playgrounds. We played on railroad tracks and farm equipment."</p>
+    <p style="margin-bottom:10px"><b>Grandson:</b> "How old are you now, son?" - "Six."</p>
+    <p style="margin-bottom:10px"><b>Grandfather:</b> "When I was your age, I was eight and a half!"</p>
+    <div style="background:#fff;border-left:4px solid #4CAF50;padding:12px;border-radius:10px;margin-top:10px">
+      <b>Theme:</b> The warm, humorous, and affectionate bond shared between grandparents and children across generations.
+    </div>
+  </div>`;
+}
+
+function renderProgress(){
+  const keys=Object.keys(state.visited);
+  document.getElementById('progressContainer').innerHTML=`
+  <div style="text-align:center;margin-bottom:18px">
+    <h2>Total Score: ${state.score}</h2>
+    <p>Stars Collected: ⭐ ${state.stars} | Lives Left: ❤️ ${state.lives}</p>
+  </div>
+  <div class="progress-big-bar"><div class="progress-big-fill" style="width:${Math.min(100,state.score/3)}%">${Math.round(Math.min(100,state.score/3))}% Completed</div></div>
+  <div class="activity-sub"><b>Sections Explored:</b> ${keys.length} activities completed.</div>`;
+}
+
+/* 10 INTERACTIVE GAMES LOGIC */
+function launchGame(gameNum){
+  state.activeGame=gameNum;
+  state.currentGameIndex=0;
+  const lId=state.currentLesson||'granny';
+  const vocab=VOCAB_BY_LESSON[lId]||VOCAB_BY_LESSON['granny'];
+  
+  if(gameNum===1){
+    showScreen('game1Screen');
+    loadGame1(vocab);
+  } else if(gameNum===2){
+    showScreen('game2Screen');
+    loadGame2(vocab);
+  } else if(gameNum===3){
+    showScreen('game3Screen');
+    loadGame3(vocab);
+  } else if(gameNum===4){
+    showScreen('game4Screen');
+    loadGame4(vocab);
+  } else if(gameNum===5){
+    showScreen('game5Screen');
+    loadGame5(vocab);
+  } else if(gameNum===6){
+    showScreen('game6Screen');
+    loadGame6(vocab);
+  } else if(gameNum===7){
+    showScreen('game7Screen');
+    loadGame7(lId);
+  } else if(gameNum===8){
+    showScreen('game8Screen');
+    loadGame8(lId);
+  } else if(gameNum===9){
+    showScreen('game9Screen');
+    loadGame9(lId);
+  } else if(gameNum===10){
+    showScreen('game10Screen');
+    loadGame10(lId);
+  }
+}
+
+function loadGame1(vocab){
+  if(state.currentGameIndex>=vocab.length){showRewardModal();return}
+  const item=vocab[state.currentGameIndex];
+  document.getElementById('g1ImgBox').innerText=item.emoji;
+  const grid=document.getElementById('g1OptionsGrid');
+  grid.innerHTML='';
+  let opts=[item.word];
+  while(opts.length<4){
+    const r=vocab[Math.floor(Math.random()*vocab.length)].word;
+    if(!opts.includes(r))opts.push(r);
+    if(opts.length>=vocab.length)break;
+  }
+  opts.sort(()=>Math.random()-.5);
+  opts.forEach(w=>{
+    const b=document.createElement('button');
+    b.className='option-btn';
+    b.innerText=w;
+    b.onclick=()=>{
+      if(w===item.word){
+        b.classList.add('correct');playSound('correct');state.score+=10;updateStatsUI();
+        setTimeout(()=>{state.currentGameIndex++;loadGame1(vocab)},700);
+      } else {
+        b.classList.add('wrong');playSound('wrong');state.lives=Math.max(0,state.lives-1);updateStatsUI();
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+function loadGame2(vocab){
+  const pCol=document.getElementById('g2PicsCol');
+  const wCol=document.getElementById('g2WordsCol');
+  pCol.innerHTML='';wCol.innerHTML='';
+  let selPic=null,selWord=null,matched=0;
+  
+  let shuffled=[...vocab].sort(()=>Math.random()-.5);
+  vocab.forEach(v=>{
+    const d=document.createElement('div');
+    d.className='match-item';
+    d.innerHTML=`<span class="text-thumb">${v.word}</span>`;
+    d.dataset.id=v.id;
+    d.onclick=()=>{
+      if(d.classList.contains('matched'))return;
+      document.querySelectorAll('#g2PicsCol .match-item').forEach(e=>e.classList.remove('selected'));
+      d.classList.add('selected');
+      selPic=v.id;
+      checkMatch();
+    };
+    pCol.appendChild(d);
+  });
+  
+  shuffled.forEach(v=>{
+    const d=document.createElement('div');
+    d.className='match-item';
+    d.innerHTML=`<span class="text-thumb ml">${v.meaning}</span>`;
+    d.dataset.id=v.id;
+    d.onclick=()=>{
+      if(d.classList.contains('matched'))return;
+      document.querySelectorAll('#g2WordsCol .match-item').forEach(e=>e.classList.remove('selected'));
+      d.classList.add('selected');
+      selWord=v.id;
+      checkMatch();
+    };
+    wCol.appendChild(d);
+  });
+  
+  function checkMatch(){
+    if(!selPic||!selWord)return;
+    const pEl=document.querySelector(`#g2PicsCol .match-item[data-id="${selPic}"]`);
+    const wEl=document.querySelector(`#g2WordsCol .match-item[data-id="${selWord}"]`);
+    if(selPic===selWord){
+      pEl.classList.add('matched');wEl.classList.add('matched');
+      playSound('correct');state.score+=15;updateStatsUI();
+      matched++;
+      if(matched>=vocab.length)setTimeout(showRewardModal,800);
+    } else {
+      pEl.classList.add('wrong');wEl.classList.add('wrong');
+      playSound('wrong');
+      setTimeout(()=>{pEl.classList.remove('wrong','selected');wEl.classList.remove('wrong','selected')},600);
+    }
+    selPic=null;selWord=null;
+  }
+}
+
+function loadGame3(vocab){
+  if(state.currentGameIndex>=vocab.length){showRewardModal();return}
+  const item=vocab[state.currentGameIndex];
+  document.getElementById('g3ImgBox').innerText=item.emoji;
+  document.getElementById('g3WordDisplay').innerText=item.missingDisplay;
+  const grid=document.getElementById('g3LettersGrid');
+  grid.innerHTML='';
+  let choices=[item.missingLetter];
+  const alpha='abcdefghijklmnopqrstuvwxyz';
+  while(choices.length<5){
+    const r=alpha[Math.floor(Math.random()*alpha.length)];
+    if(!choices.includes(r))choices.push(r);
+  }
+  choices.sort(()=>Math.random()-.5);
+  choices.forEach(char=>{
+    const b=document.createElement('button');
+    b.className='letter-btn';
+    b.innerText=char;
+    b.onclick=()=>{
+      if(char===item.missingLetter){
+        playSound('correct');state.score+=10;updateStatsUI();
+        document.getElementById('g3WordDisplay').innerText=item.word;
+        setTimeout(()=>{state.currentGameIndex++;loadGame3(vocab)},700);
+      } else {
+        playSound('wrong');state.lives=Math.max(0,state.lives-1);updateStatsUI();
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+function loadGame4(vocab){
+  if(state.currentGameIndex>=vocab.length){showRewardModal();return}
+  const item=vocab[state.currentGameIndex];
+  document.getElementById('g4ImgBox').innerText=item.emoji;
+  const slots=document.getElementById('g4Slots');
+  const tiles=document.getElementById('g4Tiles');
+  slots.innerHTML='';tiles.innerHTML='';
+  let currentWord=[];
+  
+  item.letters.forEach(()=>{
+    const s=document.createElement('div');
+    s.className='letter-slot';
+    slots.appendChild(s);
+  });
+  
+  let scrambled=[...item.letters].sort(()=>Math.random()-.5);
+  scrambled.forEach(l=>{
+    const t=document.createElement('button');
+    t.className='tile-btn';
+    t.innerText=l;
+    t.onclick=()=>{
+      if(currentWord.length<item.letters.length){
+        currentWord.push(l);
+        slots.children[currentWord.length-1].innerText=l;
+        t.style.visibility='hidden';
+        playSound('click');
+        if(currentWord.length===item.letters.length){
+          if(currentWord.join('')===item.word){
+            playSound('correct');state.score+=15;updateStatsUI();
+            setTimeout(()=>{state.currentGameIndex++;loadGame4(vocab)},800);
+          } else {
+            playSound('wrong');
+            setTimeout(()=>{
+              currentWord=[];
+              Array.from(slots.children).forEach(s=>s.innerText='');
+              Array.from(tiles.children).forEach(b=>b.style.visibility='visible');
+            },600);
+          }
+        }
+      }
+    };
+    tiles.appendChild(t);
+  });
+}
+
+function loadGame5(vocab){
+  if(state.currentGameIndex>=vocab.length){showRewardModal();return}
+  const item=vocab[state.currentGameIndex];
+  document.getElementById('g5ReplayBtn').onclick=()=>{speakText(item.word);playSound('click')};
+  speakText(item.word);
+  const grid=document.getElementById('g5OptionsGrid');
+  grid.innerHTML='';
+  let opts=[item.word];
+  while(opts.length<4){
+    const r=vocab[Math.floor(Math.random()*vocab.length)].word;
+    if(!opts.includes(r))opts.push(r);
+  }
+  opts.sort(()=>Math.random()-.5);
+  opts.forEach(w=>{
+    const b=document.createElement('button');
+    b.className='option-btn';
+    b.innerText=w;
+    b.onclick=()=>{
+      if(w===item.word){
+        b.classList.add('correct');playSound('correct');state.score+=10;updateStatsUI();
+        setTimeout(()=>{state.currentGameIndex++;loadGame5(vocab)},700);
+      } else {
+        b.classList.add('wrong');playSound('wrong');
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+function loadGame6(vocab){
+  if(state.currentGameIndex>=vocab.length){showRewardModal();return}
+  const item=vocab[state.currentGameIndex];
+  document.getElementById('g6MeaningBox').innerText=item.meaning;
+  const grid=document.getElementById('g6OptionsGrid');
+  grid.innerHTML='';
+  let opts=[item.word];
+  while(opts.length<4){
+    const r=vocab[Math.floor(Math.random()*vocab.length)].word;
+    if(!opts.includes(r))opts.push(r);
+  }
+  opts.sort(()=>Math.random()-.5);
+  opts.forEach(w=>{
+    const b=document.createElement('button');
+    b.className='option-btn';
+    b.innerText=w;
+    b.onclick=()=>{
+      if(w===item.word){
+        b.classList.add('correct');playSound('correct');state.score+=10;updateStatsUI();
+        setTimeout(()=>{state.currentGameIndex++;loadGame6(vocab)},700);
+      } else {
+        b.classList.add('wrong');playSound('wrong');
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+function loadGame7(lId){
+  const seq=SEQ_EVENTS_BY_LESSON[lId]||SEQ_EVENTS_BY_LESSON.granny;
+  const list=document.getElementById('g7SeqList');
+  document.getElementById('g7Result').innerText='';
+  list.innerHTML='';
+  state.seqCurrent=[...seq].sort(()=>Math.random()-.5);
+  state.seqCurrent.forEach((item,i)=>{
+    const d=document.createElement('div');
+    d.className='seq-item';
+    d.innerHTML=`<span class="seq-num">${i+1}</span> <span>${item.text}</span>`;
+    d.draggable=true;
+    d.onclick=()=>{
+      // Simple click to swap with previous element
+      if(i>0){
+        let temp=state.seqCurrent[i];
+        state.seqCurrent[i]=state.seqCurrent[i-1];
+        state.seqCurrent[i-1]=temp;
+        playSound('click');
+        renderSeqItems();
+      }
+    };
+    list.appendChild(d);
+  });
+  function renderSeqItems(){
+    list.innerHTML='';
+    state.seqCurrent.forEach((item,i)=>{
+      const d=document.createElement('div');
+      d.className='seq-item';
+      d.innerHTML=`<span class="seq-num">${i+1}</span> <span>${item.text}</span> <small style="color:#888">(Click to move up)</small>`;
+      d.onclick=()=>{
+        if(i>0){
+          let temp=state.seqCurrent[i];
+          state.seqCurrent[i]=state.seqCurrent[i-1];
+          state.seqCurrent[i-1]=temp;
+          playSound('click');
+          renderSeqItems();
+        }
+      };
+      list.appendChild(d);
+    });
+  }
+}
+
+function checkSequence(){
+  let correct=true;
+  for(let i=0;i<state.seqCurrent.length;i++){
+    if(state.seqCurrent[i].order!==(i+1))correct=false;
+  }
+  const r=document.getElementById('g7Result');
+  if(correct){
+    r.style.color='#2E7D32';r.innerText='🎉 Perfect Sequence! Excellent!';
+    playSound('fanfare');state.score+=30;state.stars+=2;updateStatsUI();
+  } else {
+    r.style.color='#C62828';r.innerText='❌ Order is not correct. Click items to shift their positions and try again!';
+    playSound('wrong');
+  }
+}
+
+function loadGame8(lId){
+  const quotes=CHAR_QUOTES[lId]||CHAR_QUOTES.granny;
+  if(state.currentGameIndex>=quotes.length){showRewardModal();return}
+  const item=quotes[state.currentGameIndex];
+  document.getElementById('g8QuoteBox').innerText=item.quote;
+  const grid=document.getElementById('g8OptionsGrid');
+  grid.innerHTML='';
+  item.opts.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='option-btn';
+    b.innerText=opt;
+    b.onclick=()=>{
+      if(opt===item.ans){
+        b.classList.add('correct');playSound('correct');state.score+=10;updateStatsUI();
+        setTimeout(()=>{state.currentGameIndex++;loadGame8(lId)},700);
+      } else {
+        b.classList.add('wrong');playSound('wrong');
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+function loadGame9(lId){
+  const items=SYN_ANT[lId]||SYN_ANT.granny;
+  if(state.currentGameIndex>=items.length){showRewardModal();return}
+  const item=items[state.currentGameIndex];
+  document.getElementById('g9PromptBox').innerText=item.prompt;
+  const grid=document.getElementById('g9OptionsGrid');
+  grid.innerHTML='';
+  item.opts.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='option-btn';
+    b.innerText=opt;
+    b.onclick=()=>{
+      if(opt===item.ans){
+        b.classList.add('correct');playSound('correct');state.score+=10;updateStatsUI();
+        setTimeout(()=>{state.currentGameIndex++;loadGame9(lId)},700);
+      } else {
+        b.classList.add('wrong');playSound('wrong');
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+function loadGame10(lId){
+  const items=SENT_COMP[lId]||SENT_COMP.granny;
+  if(state.currentGameIndex>=items.length){showRewardModal();return}
+  const item=items[state.currentGameIndex];
+  document.getElementById('g10SentBox').innerText=item.sent;
+  const grid=document.getElementById('g10OptionsGrid');
+  grid.innerHTML='';
+  item.opts.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='option-btn';
+    b.innerText=opt;
+    b.onclick=()=>{
+      if(opt===item.ans){
+        b.classList.add('correct');playSound('correct');state.score+=10;updateStatsUI();
+        setTimeout(()=>{state.currentGameIndex++;loadGame10(lId)},700);
+      } else {
+        b.classList.add('wrong');playSound('wrong');
+      }
+    };
+    grid.appendChild(b);
+  });
+}
+
+/* MODEL QUESTION PAPER (WITH ANSWERS) */
+function renderModelQP(){
+  document.getElementById('modelQPContainer').innerHTML=`
+  <div style="text-align:center;margin-bottom:18px">
+    <h2 style="color:#2E7D32;font-size:1.4rem">Model Evaluation – Unit 1 (Bonds of Life)</h2>
+    <div class="ml">എട്ടാം ക്ലാസ് ഇംഗ്ലീഷ് • മോഡൽ ചോദ്യപേപ്പർ</div>
+    <div style="font-size:.95rem;color:#555;margin-top:6px">Max Marks: 40 | Time: 90 Minutes</div>
+  </div>
+  <div class="qp-section">
+    <div class="qp-heading">Section A: Reading Comprehension (8 Marks)</div>
+    <div class="qp-q"><span class="qnum">1.</span> Read the passage: "Granny wore a pair of old glasses... Her eyes had grown steadily weaker..."<br>
+    a) Why were Granny's glasses ineffective? (1)<br>
+    b) Where was the nearest eye hospital located? (1)<br>
+    c) Pick out a word from the passage which means 'continuous'. (1)</div>
+  </div>
+  <div class="qp-section">
+    <div class="qp-heading">Section B: Poetry Appreciation (6 Marks)</div>
+    <div class="qp-q"><span class="qnum">2.</span> "And then the whining school-boy, with his satchel / And shining morning face, creeping like snail..."<br>
+    a) Identify the figure of speech in line 2. (1)<br>
+    b) Which stage of human life is depicted here? (1)<br>
+    c) How does the boy go to school? (1)</div>
+  </div>
+  <div class="qp-section">
+    <div class="qp-heading">Section C: Grammar &amp; Vocabulary (12 Marks)</div>
+    <div class="qp-q"><span class="qnum">3.</span> Complete using Type 1 or Type 2 Conditionals:<br>
+    a) If we care for nature, nature _______ (protect) us.<br>
+    b) If she had new glasses, she _______ (see) clearly.</div>
+    <div class="qp-q"><span class="qnum">4.</span> Supply appropriate question tags:<br>
+    a) Kalam was a hardworking boy, _______?<br>
+    b) Granny could not see the board, _______?</div>
+  </div>
+  <div class="qp-section">
+    <div class="qp-heading">Section D: Discourses (14 Marks)</div>
+    <div class="qp-q"><span class="qnum">5.</span> Write a diary entry of the eye specialist after examining Granny. (7)</div>
+    <div class="qp-q"><span class="qnum">6.</span> Prepare a formal letter from young Kalam to the Divisional Railway Manager requesting to reinstate the train stop at Rameswaram. (7)</div>
+  </div>
+  <button class="reveal-model-btn" style="width:100%;margin-top:10px" onclick="revealModel('modelAnsBox',this)">💡 Show Answer Key &amp; Hints</button>
+  <div class="model-answer-box" id="modelAnsBox">
+    <b>Answer Key:</b><br>
+    1. a) Glasses were over 10 years old, scratched and spotted. b) Mussoorie. c) Steadily.<br>
+    2. a) Simile. b) Second stage (School-boy). c) Creeping unwillingly like a snail.<br>
+    3. a) will protect. b) would see / could see.<br>
+    4. a) wasn't he? b) could she?<br>
+    5 &amp; 6: Refer to Model sections in Diary and Letter Box menus.
+  </div>`;
+}
+
+/* UNIT QUESTION PAPER (OFFICIAL FORMAT FOR PRINT/PDF) */
+function renderUnitQP(){
+  document.getElementById('unitQPPaper').innerHTML=`
+  <div class="qp-school">GOVERNMENT OF KERALA – DEPARTMENT OF GENERAL EDUCATION</div>
+  <div class="qp-title">UNIT EVALUATION: UNIT 1 – BONDS OF LIFE</div>
+  <div class="qp-meta">
+    <span><b>Standard:</b> VIII</span>
+    <span><b>Subject:</b> English</span>
+    <span><b>Time:</b> 1½ Hours</span>
+    <span><b>Max. Marks:</b> 40</span>
+  </div>
+  
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 1 – Reading Comprehension (5 Marks)</div>
+    <p>Read the excerpt from 'Little Things Matter' and answer the questions that follow:</p>
+    <p style="font-style:italic;margin-left:15px">"The only source of information about the outside world was the newspaper. The agency that distributed newspapers was run by my cousin Samsuddin. As World War II raged, the rail stop at Rameswaram station had been done away with. Samsuddin offered me the enjoyable job of collecting these bundles of papers thrown from the moving train..."</p>
+    <p>1. Who was Samsuddin and what business did he run? (1)</p>
+    <p>2. Why were the newspaper bundles tossed from the moving train? (2)</p>
+    <p>3. What was young Kalam's feeling on receiving this job offer? (1)</p>
+    <p>4. Pick out a word from the passage which means 'flung or hurled'. (1)</p>
+  </div>
+
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 2 – Poetry Appreciation (5 Marks)</div>
+    <p>Read the lines from 'The Seven Ages of Man' and answer:</p>
+    <p style="font-style:italic;margin-left:15px">"All the world's a stage,<br>And all the men and women merely players;<br>They have their exits and their entrances;<br>And one man in his time plays many parts..."</p>
+    <p>1. What does the poet compare the world to? (1)</p>
+    <p>2. What do 'exits' and 'entrances' symbolize in human life? (2)</p>
+    <p>3. Identify and explain the metaphor used in the first two lines. (2)</p>
+  </div>
+
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 3 – Diary Entry (6 Marks)</div>
+    <p>Imagine you are the eye doctor who treated Granny. You were deeply touched by the mutual care shared between Granny and young Mani. Write your diary entry for the day.</p>
+  </div>
+
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 4 – Letter Writing (6 Marks)</div>
+    <p>The road to Mussoorie was blocked due to a massive landslide, causing huge distress to villagers and travellers. Write a letter to the Executive Engineer, Public Works Department (PWD), requesting prompt removal of debris and repairing of the road.</p>
+  </div>
+
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 5 – Grammar &amp; Language Elements (8 Marks)</div>
+    <p>A. Complete the following conditional sentences using the correct form of the verbs in brackets: (4)</p>
+    <p>1. If we conserve our forests, we _______ (prevent) natural calamities.</p>
+    <p>2. If Granny _______ (wear) proper glasses, she could see the distant valley.</p>
+    <p>B. Add suitable question tags: (4)</p>
+    <p>1. Mani helped his grandmother with great devotion, _______?</p>
+    <p>2. We cannot live peacefully without protecting nature, _______?</p>
+  </div>
+
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 6 – Editing (5 Marks)</div>
+    <p>Edit the passage given below correcting the errors highlighted in brackets:</p>
+    <p>"Kalam started his day early in the morning. He (take) tuition from his teacher. His mother (wakes) him up before dawn. He (were) very happy to support his family, (wasn't he)?"</p>
+  </div>
+
+  <div class="qp-act">
+    <div class="qp-act-h">Activity 7 – Conversation (5 Marks)</div>
+    <p>Write a conversation between Samsuddin and young Kalam where Samsuddin explains the new delivery job and Kalam accepts it joyfully.</p>
+  </div>
+  <div style="text-align:center;margin-top:20px;font-size:0.9rem;border-top:1px solid #ccc;padding-top:8px">--- END OF QUESTION PAPER ---</div>`;
+}
+
+function downloadUnitQPasPDF(){
+  playSound('click');
+  const paper=document.getElementById('unitQPPaper');
+  if(!paper){alert('Question paper not ready.');return}
+  if(typeof html2pdf==='undefined'){
+    alert('PDF tool loading. Use print to save as PDF.');
+    return;
+  }
+  const opt={
+    margin:[10,12,10,12],
+    filename:'Class8_English_Unit1_Bonds_of_Life_Question_Paper.pdf',
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{scale:2,useCORS:true},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  };
+  html2pdf().set(opt).from(paper).save();
+}
+
+window.onload=function(){
+  updateStatsUI();
+  if('speechSynthesis'in window){
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged=pickVoice;
+  }
+};
+</script>
+</body>
+</html>
