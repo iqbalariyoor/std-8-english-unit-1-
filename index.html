@@ -64,9 +64,11 @@ header{background:rgba(255,255,255,.97);padding:12px 20px;border-radius:var(--ra
 .replay-btn{background:#E8EAF6;color:#3F51B5;border:none;padding:5px 12px;border-radius:15px;font-size:.85rem;font-weight:bold;cursor:pointer}
 .story-title-wrap{text-align:center;width:100%;margin-bottom:18px}
 .story-title{text-align:center;font-size:1.5rem;margin-bottom:16px;background:linear-gradient(90deg,#A5D6A7,#66BB6A);display:inline-block;padding:8px 30px;border-radius:30px;color:#1B5E20!important;font-family:'Baloo 2',cursive}
-.story-para{background:#E8F5E9;border-left:5px solid var(--primary);padding:14px 18px;border-radius:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.story-para{background:#E8F5E9;border-left:5px solid var(--primary);padding:14px 18px;border-radius:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;transition:all 0.3s ease}
+.story-para.reading-active{background:#FFF9C4!important;border-left-color:#FFC107!important;transform:scale(1.01);box-shadow:0 4px 15px rgba(255,193,7,0.3)}
 .story-para p{font-size:1.15rem;line-height:1.9;flex:1;min-width:250px}
-.mini-play{background:var(--blue);color:#fff;border:none;width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1.1rem;flex-shrink:0}
+.mini-play{background:var(--blue);color:#fff;border:none;width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1.1rem;flex-shrink:0;transition:transform 0.2s}
+.mini-play:active{transform:scale(0.9)}
 .read-all-btn{background:linear-gradient(135deg,#4CAF50,#2E7D32);color:#fff;border:none;padding:12px 30px;border-radius:25px;font-size:1.05rem;font-weight:bold;cursor:pointer;margin-bottom:18px;box-shadow:0 4px 10px rgba(76,175,80,.4);font-family:'Baloo 2',cursive}
 .activity-block{background:#FFF8E1;border:2px solid #FFE082;border-radius:18px;padding:20px;margin-bottom:22px;width:100%}
 .activity-heading{color:#E65100;font-size:1.15rem;margin-bottom:14px;font-weight:800;font-family:'Baloo 2',cursive}
@@ -303,22 +305,304 @@ const SECTION_TITLES={
 read:'📖 Choose a Lesson to Read',learn:'🗂️ Learn Words – Choose Lesson',activities:'📝 Activities – Choose Lesson',games:'🎮 Games – Choose Lesson',quiz:'❓ Quiz – Choose Lesson',vocab:'📚 Vocabulary – Choose Lesson',diary:'📔 Diary – Choose Lesson',letter:'✉️ Letter – Choose Lesson',roleplay:'🎭 Role Play – Choose Lesson',grammar:'✏️ Grammar Quest – Choose Lesson',punctuation:'❗ Punctuation – Choose Lesson',wordfun:'🔤 Idioms & Phrasal Verbs',poster:'🪧 Descriptive Writing'
 };
 
-let audioCtx=null,chosenVoice=null;
-function initAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)()}
-function playSound(type){if(!state.audioEnabled)return;initAudio();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);const now=audioCtx.currentTime;if(type==='correct'){osc.type='sine';osc.frequency.setValueAtTime(523.25,now);osc.frequency.exponentialRampToValueAtTime(783.99,now+.3);gain.gain.setValueAtTime(.3,now);gain.gain.exponentialRampToValueAtTime(.01,now+.4);osc.start(now);osc.stop(now+.4)}else if(type==='wrong'){osc.type='sawtooth';osc.frequency.setValueAtTime(220,now);osc.frequency.linearRampToValueAtTime(130,now+.3);gain.gain.setValueAtTime(.3,now);gain.gain.exponentialRampToValueAtTime(.01,now+.35);osc.start(now);osc.stop(now+.35)}else if(type==='click'){osc.type='triangle';osc.frequency.setValueAtTime(400,now);gain.gain.setValueAtTime(.15,now);gain.gain.exponentialRampToValueAtTime(.01,now+.08);osc.start(now);osc.stop(now+.08)}else if(type==='fanfare'){[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.setValueAtTime(f,now+i*.12);g.gain.setValueAtTime(.2,now+i*.12);g.gain.exponentialRampToValueAtTime(.01,now+i*.12+.3);o.start(now+i*.12);o.stop(now+i*.12+.3)})}}
-function pickVoice(){if(!('speechSynthesis'in window))return null;const voices=window.speechSynthesis.getVoices();if(!voices.length)return null;chosenVoice=voices.find(v=>v.lang==='en-IN')||voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang&&v.lang.startsWith('en'))||voices[0];return chosenVoice}
-function speakText(text,onend){if(!state.audioEnabled){if(onend)onend();return}if('speechSynthesis'in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-IN';u.rate=.9;u.pitch=1.02;const v=chosenVoice||pickVoice();if(v)u.voice=v;if(onend)u.onend=onend;u.onerror=function(){if(onend)onend()};window.speechSynthesis.speak(u)}else if(onend)onend()}
-function toggleAudio(){state.audioEnabled=!state.audioEnabled;document.getElementById('btnAudioToggle').innerText=state.audioEnabled?'🔊':'🔇';if(!state.audioEnabled)window.speechSynthesis.cancel()}
-function toggleFullscreen(){if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{})}else if(document.exitFullscreen){document.exitFullscreen()}}
-function printPage(){playSound('click');window.print()}
-function downloadPage(){playSound('click');try{const htmlContent="<!DOCTYPE html>\n"+document.documentElement.outerHTML;const blob=new Blob([htmlContent],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Bonds_of_Life_STD8_Unit1.html';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),3000)}catch(e){alert('Use print function to save as PDF.')}}
-function updateStatsUI(){document.getElementById('valScore').innerText=state.score;document.getElementById('valLives').innerText=state.lives;document.getElementById('valStars').innerText=state.stars;document.getElementById('progressBar').style.width=Math.min(100,state.score/3)+'%'}
-function showRewardModal(){playSound('fanfare');document.getElementById('rewardModal').classList.add('active')}
-function closeRewardModal(){document.getElementById('rewardModal').classList.remove('active');showScreen('homeScreen')}
-function revealModel(id,btn){const el=document.getElementById(id);const showing=el.style.display==='block';el.style.display=showing?'none':'block';if(!showing){state.score+=5;updateStatsUI();if(btn)btn.innerText='🙈 Hide Model'}else if(btn){btn.innerText='💡 Show Model Answer'}}
-function genericCheck(selClass,resultId){const sels=document.querySelectorAll('.'+selClass);let correct=0;sels.forEach(s=>{if(s.value===s.dataset.ans){s.style.borderColor='#4CAF50';correct++}else{s.style.borderColor='#F44336'}});const r=document.getElementById(resultId);r.style.color=correct===sels.length?'#2E7D32':'#C62828';r.innerText=`Score: ${correct}/${sels.length} ${correct===sels.length?'Excellent! Perfect score!':'Try again!'}`;if(correct===sels.length){state.score+=15;state.stars+=1;updateStatsUI();playSound('correct')}else{playSound('wrong')}}
+/* --- ENHANCED IN-APP WEBVIEW AUDIO ENGINE --- */
+let audioCtx = null;
+let chosenVoice = null;
+let voicesLoaded = false;
 
-/* CLASS 8 TEXT CONTENT */
+function initAudio() {
+  try {
+    if (!audioCtx) {
+      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtxClass) {
+        audioCtx = new AudioCtxClass();
+      }
+    }
+    // Resume audio context if suspended (crucial for Mobile WebView / Android WebView restriction)
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  } catch(e) {
+    console.warn("AudioContext init error:", e);
+  }
+}
+
+// User interaction events unlock Web Audio API inside Native App WebViews
+window.addEventListener('touchstart', initAudio, { once: true });
+window.addEventListener('mousedown', initAudio, { once: true });
+window.addEventListener('click', initAudio, { once: true });
+
+function loadVoices() {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0) {
+      voicesLoaded = true;
+      chosenVoice = voices.find(v => v.lang === 'en-IN') ||
+                    voices.find(v => v.lang === 'en-GB') ||
+                    voices.find(v => v.lang && v.lang.startsWith('en')) ||
+                    voices[0];
+    }
+  } catch(e) {
+    console.warn("Voice load error:", e);
+  }
+}
+
+if ('speechSynthesis' in window) {
+  loadVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+  }
+}
+
+function playSound(type){
+  if(!state.audioEnabled) return;
+  initAudio();
+  if(!audioCtx) return;
+  
+  try {
+    const now = audioCtx.currentTime;
+    if (type==='correct') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.3);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+      osc.start(now); osc.stop(now + 0.4);
+    } else if (type==='wrong') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.linearRampToValueAtTime(130, now + 0.3);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+      osc.start(now); osc.stop(now + 0.35);
+    } else if (type==='click') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(400, now);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+      osc.start(now); osc.stop(now + 0.08);
+    } else if (type==='fanfare') {
+      [523.25, 659.25, 783.99, 1046.5].forEach((f,i)=>{
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination);
+        o.frequency.setValueAtTime(f, now + i*0.12);
+        g.gain.setValueAtTime(0.2, now + i*0.12);
+        g.gain.exponentialRampToValueAtTime(0.01, now + i*0.12 + 0.3);
+        o.start(now + i*0.12);
+        o.stop(now + i*0.12 + 0.3);
+      });
+    }
+  } catch(e) {
+    console.warn("Sound play error:", e);
+  }
+}
+
+/* ROBUST IN-APP SPEECH SYNTHESIS WITH SAFETY TIMEOUT & AUDIO CHIME FALLBACK */
+function speakText(text, onend) {
+  if (!state.audioEnabled) {
+    if (onend) onend();
+    return;
+  }
+  
+  initAudio();
+  
+  // 1. Check if Android / Native App bridge is present
+  if (window.AndroidHost && typeof window.AndroidHost.speak === 'function') {
+    try {
+      window.AndroidHost.speak(text);
+      if (onend) setTimeout(onend, Math.max(1500, text.length * 60));
+      return;
+    } catch(e) {}
+  }
+
+  // 2. Web Speech API with safety handlers for WebViews
+  if ('speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel(); // Reset any hung SpeechSynthesis queue in Android WebView
+      
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-IN';
+      u.rate = 0.9;
+      u.pitch = 1.0;
+      u.volume = 1.0;
+      
+      if (!chosenVoice) loadVoices();
+      if (chosenVoice) u.voice = chosenVoice;
+
+      let hasEnded = false;
+      const finish = () => {
+        if (!hasEnded) {
+          hasEnded = true;
+          if (onend) onend();
+        }
+      };
+
+      u.onend = finish;
+      u.onerror = (err) => {
+        console.warn("SpeechSynthesis error in WebView:", err);
+        fallbackAcousticChime(text, finish);
+      };
+
+      // Safety timeout in case WebView SpeechSynthesis fails to fire 'onend'
+      const estDuration = Math.max(2000, (text.length / 10) * 1000);
+      const safetyTimer = setTimeout(() => {
+        if (!hasEnded) {
+          console.log("Speech safety timeout triggered for WebView");
+          try { window.speechSynthesis.cancel(); } catch(e){}
+          finish();
+        }
+      }, estDuration + 3000);
+
+      window.speechSynthesis.speak(u);
+
+      // Force resume in WebView if paused
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      return;
+    } catch(e) {
+      console.warn("Speech synthesis exception:", e);
+    }
+  }
+
+  // 3. Fallback when SpeechSynthesis is unavailable in WebView
+  fallbackAcousticChime(text, onend);
+}
+
+function fallbackAcousticChime(text, onend) {
+  initAudio();
+  if (!audioCtx) {
+    if (onend) onend();
+    return;
+  }
+  try {
+    const now = audioCtx.currentTime;
+    const dur = Math.min(3.5, Math.max(1.0, text.length * 0.04));
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(350, now);
+    osc.frequency.exponentialRampToValueAtTime(550, now + dur * 0.5);
+    osc.frequency.exponentialRampToValueAtTime(280, now + dur);
+    
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.linearRampToValueAtTime(0.01, now + dur);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + dur);
+    
+    setTimeout(() => {
+      if (onend) onend();
+    }, dur * 1000);
+  } catch(e) {
+    if (onend) onend();
+  }
+}
+
+function toggleAudio(){
+  state.audioEnabled = !state.audioEnabled;
+  document.getElementById('btnAudioToggle').innerText = state.audioEnabled ? '🔊' : '🔇';
+  if(!state.audioEnabled && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+function toggleFullscreen(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+  } else if(document.exitFullscreen){
+    document.exitFullscreen();
+  }
+}
+
+function printPage(){ playSound('click'); window.print(); }
+function downloadPage(){
+  playSound('click');
+  try{
+    const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Bonds_of_Life_STD8_Unit1.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),3000);
+  } catch(e){
+    alert('Use print function to save as PDF.');
+  }
+}
+
+function updateStatsUI(){
+  document.getElementById('valScore').innerText = state.score;
+  document.getElementById('valLives').innerText = state.lives;
+  document.getElementById('valStars').innerText = state.stars;
+  document.getElementById('progressBar').style.width = Math.min(100, state.score/3) + '%';
+}
+
+function showRewardModal(){
+  playSound('fanfare');
+  document.getElementById('rewardModal').classList.add('active');
+}
+
+function closeRewardModal(){
+  document.getElementById('rewardModal').classList.remove('active');
+  showScreen('homeScreen');
+}
+
+function revealModel(id, btn){
+  const el = document.getElementById(id);
+  const showing = el.style.display === 'block';
+  el.style.display = showing ? 'none' : 'block';
+  if(!showing){
+    state.score += 5;
+    updateStatsUI();
+    if(btn) btn.innerText = '🙈 Hide Model';
+  } else if(btn){
+    btn.innerText = '💡 Show Model Answer';
+  }
+}
+
+function genericCheck(selClass, resultId){
+  const sels = document.querySelectorAll('.' + selClass);
+  let correct = 0;
+  sels.forEach(s => {
+    if(s.value === s.dataset.ans){
+      s.style.borderColor = '#4CAF50';
+      correct++;
+    } else {
+      s.style.borderColor = '#F44336';
+    }
+  });
+  const r = document.getElementById(resultId);
+  r.style.color = correct === sels.length ? '#2E7D32' : '#C62828';
+  r.innerText = `Score: ${correct}/${sels.length} ${correct===sels.length ? 'Excellent! Perfect score!' : 'Try again!'}`;
+  if(correct === sels.length){
+    state.score += 15;
+    state.stars += 1;
+    updateStatsUI();
+    playSound('correct');
+  } else {
+    playSound('wrong');
+  }
+}
+
+/* CLASS 8 TEXT CONTENT DATA */
 const GRANNY_STORY=[
   "Granny could hear the distant roar of the river and smell the pine needles, and feel the presence of her grandson, Mani. She couldn't see the river or the trees. She could only make out Mani's fuzzy hair, and sometimes, his blackberry eyes and the gleam of his teeth when he smiled.",
   "Granny wore a pair of old glasses. She'd been wearing them for well over ten years. Her eyes had grown steadily weaker, and the glasses were now scratched and spotted. Mani and his father felt that it was high time Granny had her eyes tested and got herself new glasses in Mussoorie.",
@@ -485,21 +769,189 @@ const SEQ_EVENTS_BY_LESSON={
   ]
 };
 
-function showScreen(id){playSound('click');if('speechSynthesis'in window)window.speechSynthesis.cancel();document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const t=document.getElementById(id);if(t)t.classList.add('active');if(id==='modelQPScreen')renderModelQP();if(id==='unitQPScreen')renderUnitQP();if(id==='bioScreen')renderBio();if(id==='doorwayScreen')renderDoorway();if(id==='progressScreen')renderProgress()}
-function openChoose(section){state.currentSection=section;state.lastChooseSection=section;document.getElementById('chooseTitle').innerText=SECTION_TITLES[section]||'Choose a Lesson';const list=document.getElementById('chooseList');list.innerHTML='';LESSONS.forEach(L=>{const d=document.createElement('div');d.className='lesson-pick';d.innerHTML=`<div class="lp-emoji">${L.emoji}</div><div><div class="lp-title">${L.title}</div><div class="lp-sub">${L.sub}</div></div>`;d.onclick=()=>selectLesson(L.id);list.appendChild(d)});showScreen('chooseScreen')}
-function selectLesson(lessonId){state.currentLesson=lessonId;state.visited[state.currentSection+'_'+lessonId]=true;if(state.currentSection==='games'){openGamesMenu(lessonId);return}renderContentFor(state.currentSection,lessonId)}
-function goBackFromContent(){if(state.lastChooseSection)openChoose(state.lastChooseSection);else showScreen('homeScreen')}
-function openGamesMenu(lessonId){const L=LESSONS.find(x=>x.id===lessonId);document.getElementById('gamesMenuTitle').innerText=`🎮 Games – ${L?L.title:''}`;document.getElementById('gamesButtons').innerHTML=`<button class="btn-menu b1" onclick="launchGame(1)">🖼️ Picture Detective</button><button class="btn-menu b2" onclick="launchGame(2)">🔗 Word–Meaning Match</button><button class="btn-menu b3" onclick="launchGame(3)">🔍 Missing Letter Hunter</button><button class="btn-menu b4" onclick="launchGame(4)">🧩 Word Builder</button><button class="btn-menu b5" onclick="launchGame(5)">🎧 Listening Challenge</button><button class="btn-menu b9" onclick="launchGame(6)">🌟 Meaning Master</button><button class="btn-menu b6" onclick="launchGame(7)">📋 Sequence the Events</button><button class="btn-menu b10" onclick="launchGame(8)">🎭 Who Said / Did It?</button><button class="btn-menu b14" onclick="launchGame(9)">🔄 Synonym / Antonym</button><button class="btn-menu b15" onclick="launchGame(10)">📝 Sentence Completer</button>`;showScreen('gamesMenuScreen')}
+function showScreen(id){
+  playSound('click');
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById(id);
+  if(t) t.classList.add('active');
+  if(id==='modelQPScreen') renderModelQP();
+  if(id==='unitQPScreen') renderUnitQP();
+  if(id==='bioScreen') renderBio();
+  if(id==='doorwayScreen') renderDoorway();
+  if(id==='progressScreen') renderProgress();
+}
 
-function renderContentFor(section,lessonId){const L=LESSONS.find(x=>x.id===lessonId);document.getElementById('contentTitle').innerText=(SECTION_TITLES[section]||section)+' → '+(L?L.title:'');const body=document.getElementById('contentBody');body.innerHTML='';if(section==='read')renderRead(body,lessonId);else if(section==='learn')renderLearn(body,lessonId);else if(section==='activities')renderActivities(body,lessonId);else if(section==='quiz')renderQuiz(body,lessonId);else if(section==='vocab')renderVocab(body,lessonId);else if(section==='diary')renderDiary(body,lessonId);else if(section==='letter')renderLetter(body,lessonId);else if(section==='roleplay')renderRoleplay(body,lessonId);else if(section==='grammar')renderGrammar(body,lessonId);else if(section==='punctuation')renderPunctuation(body,lessonId);else if(section==='wordfun')renderWordFun(body,lessonId);else if(section==='poster')renderPoster(body,lessonId);showScreen('contentScreen')}
+function openChoose(section){
+  state.currentSection=section;
+  state.lastChooseSection=section;
+  document.getElementById('chooseTitle').innerText=SECTION_TITLES[section]||'Choose a Lesson';
+  const list=document.getElementById('chooseList');
+  list.innerHTML='';
+  LESSONS.forEach(L=>{
+    const d=document.createElement('div');
+    d.className='lesson-pick';
+    d.innerHTML=`<div class="lp-emoji">${L.emoji}</div><div><div class="lp-title">${L.title}</div><div class="lp-sub">${L.sub}</div></div>`;
+    d.onclick=()=>selectLesson(L.id);
+    list.appendChild(d);
+  });
+  showScreen('chooseScreen');
+}
 
-function renderRead(body,lessonId){let lines=[],qa=[],title='';if(lessonId==='granny'){lines=GRANNY_STORY;qa=LESSON_QA.granny;title='👵 A Long Walk with Granny'}else if(lessonId==='seven_ages'){lines=SEVEN_AGES_POEM;qa=LESSON_QA.seven_ages;title='🎭 The Seven Ages of Man'}else{lines=KALAM_STORY;qa=LESSON_QA.kalam;title='🚀 Little Things Matter'}
-body.innerHTML=`<div class="story-title-wrap"><span class="story-title">${title}</span></div><button class="read-all-btn" id="readAllBtn">🔊 Read Text Aloud</button><div id="storyParas"></div><div class="activity-block" style="margin-top:20px"><div class="activity-heading">🔎 Let's Explore &amp; Reflect</div><div id="qaBox"></div></div>`;
-const paras=document.getElementById('storyParas');lines.forEach(line=>{const div=document.createElement('div');div.className='story-para';div.innerHTML=`<p>${line}</p><button class="mini-play" onclick="speakText(this.dataset.t)" data-t="${line.replace(/"/g,'&quot;')}">🔊</button>`;paras.appendChild(div)});
-const qaBox=document.getElementById('qaBox');qa.forEach((item,i)=>{const el=document.createElement('div');el.className='qa-line';el.innerHTML=`<div class="q">${i+1}. ${item[0]}</div><div class="a" id="qa${i}">${item[1]}</div><button class="reveal-btn" onclick="document.getElementById('qa${i}').classList.toggle('show')">💡 Show Answer</button>`;qaBox.appendChild(el)});
-let reading=false;document.getElementById('readAllBtn').onclick=function(){if(reading){window.speechSynthesis.cancel();reading=false;this.innerText='🔊 Read Text Aloud';return}reading=true;this.innerText='⏹️ Stop Reading';let i=0;function next(){if(i>=lines.length||!reading){reading=false;document.getElementById('readAllBtn').innerText='🔊 Read Text Aloud';return}speakText(lines[i],()=>{i++;next()})}next()}}
+function selectLesson(lessonId){
+  state.currentLesson=lessonId;
+  state.visited[state.currentSection+'_'+lessonId]=true;
+  if(state.currentSection==='games'){
+    openGamesMenu(lessonId);
+    return;
+  }
+  renderContentFor(state.currentSection,lessonId);
+}
 
-function renderLearn(body,lessonId){const vocab=VOCAB_BY_LESSON[lessonId]||[];body.innerHTML=`<div class="cards-grid" id="learnGrid"></div>`;const grid=document.getElementById('learnGrid');vocab.forEach(item=>{const card=document.createElement('div');card.className='word-card';card.onclick=()=>{card.classList.add('playing');speakText(item.word);playSound('click');setTimeout(()=>card.classList.remove('playing'),1200)};card.innerHTML=`<div class="card-emoji">${item.emoji}</div><div class="word-eng">${item.word}</div><div class="word-meaning ml">${item.meaning}</div><button class="replay-btn">🔊 Listen</button>`;grid.appendChild(card)})}
+function goBackFromContent(){
+  if(state.lastChooseSection) openChoose(state.lastChooseSection);
+  else showScreen('homeScreen');
+}
+
+function openGamesMenu(lessonId){
+  const L=LESSONS.find(x=>x.id===lessonId);
+  document.getElementById('gamesMenuTitle').innerText=`🎮 Games – ${L?L.title:''}`;
+  document.getElementById('gamesButtons').innerHTML=`
+    <button class="btn-menu b1" onclick="launchGame(1)">🖼️ Picture Detective</button>
+    <button class="btn-menu b2" onclick="launchGame(2)">🔗 Word–Meaning Match</button>
+    <button class="btn-menu b3" onclick="launchGame(3)">🔍 Missing Letter Hunter</button>
+    <button class="btn-menu b4" onclick="launchGame(4)">🧩 Word Builder</button>
+    <button class="btn-menu b5" onclick="launchGame(5)">🎧 Listening Challenge</button>
+    <button class="btn-menu b9" onclick="launchGame(6)">🌟 Meaning Master</button>
+    <button class="btn-menu b6" onclick="launchGame(7)">📋 Sequence the Events</button>
+    <button class="btn-menu b10" onclick="launchGame(8)">🎭 Who Said / Did It?</button>
+    <button class="btn-menu b14" onclick="launchGame(9)">🔄 Synonym / Antonym</button>
+    <button class="btn-menu b15" onclick="launchGame(10)">📝 Sentence Completer</button>`;
+  showScreen('gamesMenuScreen');
+}
+
+function renderContentFor(section,lessonId){
+  const L=LESSONS.find(x=>x.id===lessonId);
+  document.getElementById('contentTitle').innerText=(SECTION_TITLES[section]||section)+' → '+(L?L.title:'');
+  const body=document.getElementById('contentBody');
+  body.innerHTML='';
+  
+  if(section==='read') renderRead(body,lessonId);
+  else if(section==='learn') renderLearn(body,lessonId);
+  else if(section==='activities') renderActivities(body,lessonId);
+  else if(section==='quiz') renderQuiz(body,lessonId);
+  else if(section==='vocab') renderVocab(body,lessonId);
+  else if(section==='diary') renderDiary(body,lessonId);
+  else if(section==='letter') renderLetter(body,lessonId);
+  else if(section==='roleplay') renderRoleplay(body,lessonId);
+  else if(section==='grammar') renderGrammar(body,lessonId);
+  else if(section==='punctuation') renderPunctuation(body,lessonId);
+  else if(section==='wordfun') renderWordFun(body,lessonId);
+  else if(section==='poster') renderPoster(body,lessonId);
+  
+  showScreen('contentScreen');
+}
+
+function renderRead(body,lessonId){
+  let lines=[], qa=[], title='';
+  if(lessonId==='granny'){
+    lines=GRANNY_STORY; qa=LESSON_QA.granny; title='👵 A Long Walk with Granny';
+  } else if(lessonId==='seven_ages'){
+    lines=SEVEN_AGES_POEM; qa=LESSON_QA.seven_ages; title='🎭 The Seven Ages of Man';
+  } else {
+    lines=KALAM_STORY; qa=LESSON_QA.kalam; title='🚀 Little Things Matter';
+  }
+  
+  body.innerHTML=`
+    <div class="story-title-wrap"><span class="story-title">${title}</span></div>
+    <button class="read-all-btn" id="readAllBtn">🔊 Read Text Aloud</button>
+    <div id="storyParas"></div>
+    <div class="activity-block" style="margin-top:20px">
+      <div class="activity-heading">🔎 Let's Explore &amp; Reflect</div>
+      <div id="qaBox"></div>
+    </div>`;
+  
+  const paras=document.getElementById('storyParas');
+  lines.forEach((line, index)=>{
+    const div=document.createElement('div');
+    div.className='story-para';
+    div.id=`para-${index}`;
+    div.innerHTML=`<p>${line}</p><button class="mini-play" onclick="playSinglePara(${index})">🔊</button>`;
+    paras.appendChild(div);
+  });
+
+  const qaBox=document.getElementById('qaBox');
+  qa.forEach((item,i)=>{
+    const el=document.createElement('div');
+    el.className='qa-line';
+    el.innerHTML=`<div class="q">${i+1}. ${item[0]}</div><div class="a" id="qa${i}">${item[1]}</div><button class="reveal-btn" onclick="document.getElementById('qa${i}').classList.toggle('show')">💡 Show Answer</button>`;
+    qaBox.appendChild(el);
+  });
+
+  let reading=false;
+  const readBtn = document.getElementById('readAllBtn');
+
+  window.playSinglePara = function(idx) {
+    document.querySelectorAll('.story-para').forEach(p=>p.classList.remove('reading-active'));
+    const pEl = document.getElementById(`para-${idx}`);
+    if(pEl) pEl.classList.add('reading-active');
+    
+    speakText(lines[idx], ()=>{
+      if(pEl) pEl.classList.remove('reading-active');
+    });
+  };
+
+  readBtn.onclick=function(){
+    if(reading){
+      if('speechSynthesis' in window) window.speechSynthesis.cancel();
+      reading=false;
+      this.innerText='🔊 Read Text Aloud';
+      document.querySelectorAll('.story-para').forEach(p=>p.classList.remove('reading-active'));
+      return;
+    }
+    reading=true;
+    this.innerText='⏹️ Stop Reading';
+    let i=0;
+    
+    function next(){
+      document.querySelectorAll('.story-para').forEach(p=>p.classList.remove('reading-active'));
+      if(i >= lines.length || !reading){
+        reading=false;
+        readBtn.innerText='🔊 Read Text Aloud';
+        return;
+      }
+      const pEl = document.getElementById(`para-${i}`);
+      if(pEl) {
+        pEl.classList.add('reading-active');
+        pEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
+      speakText(lines[i], ()=>{
+        i++;
+        next();
+      });
+    }
+    next();
+  };
+}
+
+function renderLearn(body,lessonId){
+  const vocab=VOCAB_BY_LESSON[lessonId]||[];
+  body.innerHTML=`<div class="cards-grid" id="learnGrid"></div>`;
+  const grid=document.getElementById('learnGrid');
+  vocab.forEach(item=>{
+    const card=document.createElement('div');
+    card.className='word-card';
+    card.onclick=()=>{
+      card.classList.add('playing');
+      speakText(item.word);
+      playSound('click');
+      setTimeout(()=>card.classList.remove('playing'),1200);
+    };
+    card.innerHTML=`<div class="card-emoji">${item.emoji}</div><div class="word-eng">${item.word}</div><div class="word-meaning ml">${item.meaning}</div><button class="replay-btn">🔊 Listen</button>`;
+    grid.appendChild(card);
+  });
+}
 
 function renderActivities(body,lessonId){
   if(lessonId==='granny'){
@@ -520,10 +972,61 @@ function renderActivities(body,lessonId){
   }
 }
 
-function renderQuiz(body,lessonId){const quiz=QUIZ_BY_LESSON[lessonId]||[];state.quizSubmitted=false;body.innerHTML=`<div id="quizScoreBox" style="display:none" class="quiz-score-box"></div><div id="quizContainer"></div><div style="text-align:center"><button class="submit-quiz-btn" onclick="submitQuiz('${lessonId}')">✅ Submit Answers</button></div>`;const c=document.getElementById('quizContainer');quiz.forEach((item,qi)=>{const qd=document.createElement('div');qd.className='quiz-q';qd.innerHTML=`<div class="qtext">${qi+1}. ${item.q}</div><div class="quiz-opts" id="qopts${qi}"></div>`;c.appendChild(qd);const od=qd.querySelector('#qopts'+qi);item.opts.forEach((opt,oi)=>{const b=document.createElement('div');b.className='quiz-opt';b.innerText=opt;b.dataset.qi=qi;b.dataset.oi=oi;b.onclick=()=>{if(state.quizSubmitted)return;document.querySelectorAll(`#qopts${qi} .quiz-opt`).forEach(e=>e.classList.remove('picked'));b.classList.add('picked');playSound('click')};od.appendChild(b)})})}
-function submitQuiz(lessonId){if(state.quizSubmitted)return;state.quizSubmitted=true;const quiz=QUIZ_BY_LESSON[lessonId]||[];let score=0;quiz.forEach((item,qi)=>{const opts=document.querySelectorAll(`#qopts${qi} .quiz-opt`);const picked=document.querySelector(`#qopts${qi} .picked`);if(picked&&parseInt(picked.dataset.oi)===item.ans)score++;opts.forEach(o=>{if(parseInt(o.dataset.oi)===item.ans)o.classList.add('correct-ans');else if(o.classList.contains('picked'))o.classList.add('wrong-ans')})});state.score+=score*10;state.stars+=(score>=Math.ceil(quiz.length*.8)?2:1);updateStatsUI();const box=document.getElementById('quizScoreBox');box.style.display='block';box.innerHTML=`Your Score: ${score} / ${quiz.length} ${score>=Math.ceil(quiz.length*.8)?'🎉 Excellent!':'Keep practicing!'}`;playSound(score>=Math.ceil(quiz.length*.8)?'fanfare':'correct')}
+function renderQuiz(body,lessonId){
+  const quiz=QUIZ_BY_LESSON[lessonId]||[];
+  state.quizSubmitted=false;
+  body.innerHTML=`<div id="quizScoreBox" style="display:none" class="quiz-score-box"></div><div id="quizContainer"></div><div style="text-align:center"><button class="submit-quiz-btn" onclick="submitQuiz('${lessonId}')">✅ Submit Answers</button></div>`;
+  const c=document.getElementById('quizContainer');
+  quiz.forEach((item,qi)=>{
+    const qd=document.createElement('div');
+    qd.className='quiz-q';
+    qd.innerHTML=`<div class="qtext">${qi+1}. ${item.q}</div><div class="quiz-opts" id="qopts${qi}"></div>`;
+    c.appendChild(qd);
+    const od=qd.querySelector('#qopts'+qi);
+    item.opts.forEach((opt,oi)=>{
+      const b=document.createElement('div');
+      b.className='quiz-opt';
+      b.innerText=opt;
+      b.dataset.qi=qi;
+      b.dataset.oi=oi;
+      b.onclick=()=>{
+        if(state.quizSubmitted)return;
+        document.querySelectorAll(`#qopts${qi} .quiz-opt`).forEach(e=>e.classList.remove('picked'));
+        b.classList.add('picked');
+        playSound('click');
+      };
+      od.appendChild(b);
+    });
+  });
+}
 
-function renderVocab(body,lessonId){const vocab=VOCAB_BY_LESSON[lessonId]||[];body.innerHTML=`<table class="vocab-table"><thead><tr><th>Word</th><th>Meaning (മലയാളം)</th></tr></thead><tbody>${vocab.map(v=>`<tr><td><span class="vocab-emoji">${v.emoji}</span> <b>${v.word}</b></td><td class="ml">${v.meaning}</td></tr>`).join('')}</tbody></table>`}
+function submitQuiz(lessonId){
+  if(state.quizSubmitted)return;
+  state.quizSubmitted=true;
+  const quiz=QUIZ_BY_LESSON[lessonId]||[];
+  let score=0;
+  quiz.forEach((item,qi)=>{
+    const opts=document.querySelectorAll(`#qopts${qi} .quiz-opt`);
+    const picked=document.querySelector(`#qopts${qi} .picked`);
+    if(picked&&parseInt(picked.dataset.oi)===item.ans)score++;
+    opts.forEach(o=>{
+      if(parseInt(o.dataset.oi)===item.ans)o.classList.add('correct-ans');
+      else if(o.classList.contains('picked'))o.classList.add('wrong-ans');
+    });
+  });
+  state.score+=score*10;
+  state.stars+=(score>=Math.ceil(quiz.length*.8)?2:1);
+  updateStatsUI();
+  const box=document.getElementById('quizScoreBox');
+  box.style.display='block';
+  box.innerHTML=`Your Score: ${score} / ${quiz.length} ${score>=Math.ceil(quiz.length*.8)?'🎉 Excellent!':'Keep practicing!'}`;
+  playSound(score>=Math.ceil(quiz.length*.8)?'fanfare':'correct');
+}
+
+function renderVocab(body,lessonId){
+  const vocab=VOCAB_BY_LESSON[lessonId]||[];
+  body.innerHTML=`<table class="vocab-table"><thead><tr><th>Word</th><th>Meaning (മലയാളം)</th></tr></thead><tbody>${vocab.map(v=>`<tr><td><span class="vocab-emoji">${v.emoji}</span> <b>${v.word}</b></td><td class="ml">${v.meaning}</td></tr>`).join('')}</tbody></table>`;
+}
 
 function renderDiary(body,lessonId){
   if(lessonId==='granny'){
@@ -953,29 +1456,13 @@ function loadGame7(lId){
   document.getElementById('g7Result').innerText='';
   list.innerHTML='';
   state.seqCurrent=[...seq].sort(()=>Math.random()-.5);
-  state.seqCurrent.forEach((item,i)=>{
-    const d=document.createElement('div');
-    d.className='seq-item';
-    d.innerHTML=`<span class="seq-num">${i+1}</span> <span>${item.text}</span>`;
-    d.draggable=true;
-    d.onclick=()=>{
-      // Simple click to swap with previous element
-      if(i>0){
-        let temp=state.seqCurrent[i];
-        state.seqCurrent[i]=state.seqCurrent[i-1];
-        state.seqCurrent[i-1]=temp;
-        playSound('click');
-        renderSeqItems();
-      }
-    };
-    list.appendChild(d);
-  });
+  
   function renderSeqItems(){
     list.innerHTML='';
     state.seqCurrent.forEach((item,i)=>{
       const d=document.createElement('div');
       d.className='seq-item';
-      d.innerHTML=`<span class="seq-num">${i+1}</span> <span>${item.text}</span> <small style="color:#888">(Click to move up)</small>`;
+      d.innerHTML=`<span class="seq-num">${i+1}</span> <span>${item.text}</span> <small style="color:#888;margin-left:auto">(Tap to shift)</small>`;
       d.onclick=()=>{
         if(i>0){
           let temp=state.seqCurrent[i];
@@ -988,6 +1475,7 @@ function loadGame7(lId){
       list.appendChild(d);
     });
   }
+  renderSeqItems();
 }
 
 function checkSequence(){
@@ -1205,9 +1693,10 @@ function downloadUnitQPasPDF(){
 
 window.onload=function(){
   updateStatsUI();
-  if('speechSynthesis'in window){
+  initAudio();
+  if('speechSynthesis' in window){
     window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged=pickVoice;
+    window.speechSynthesis.onvoiceschanged=loadVoices;
   }
 };
 </script>
